@@ -1,0 +1,57 @@
+<head>
+    <title>WYI: Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:600,200' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div id = "header">
+        <h2 id = "title">What's Your Impact?</h2>
+    </div>
+
+     {{#if currentUser}}
+        {{> loggedin}}
+    {{else}}
+        {{> register}}
+        {{> login}}
+    {{/if}}
+
+  {{> index}}
+</body>
+
+
+<template name="index" id = "index">
+  <div id = "dashlist">
+      <ul class="nav nav-pills" id = "navigator">
+        <li data-template="home" role="presentation" class="active"><a href="#">Home</a></li>
+        <li data-template="dashboard" role="presentation"><a href="#">Dashboard</a></li>
+        <li data-template="myprofile" role="presentation"><a href="#">My Profile</a></li>
+      </ul>
+  </div>
+  <div>
+      <div id = "template">
+        {{> Template.dynamic template=tab data=tabData}}
+        </div>
+    </div>
+</template>
+
+<template name="register">
+    <form class = "register">
+        Email <input type="email" name="registerEmail">
+        Password <input type="password" name="registerPassword">
+        <input type="submit" value="Register">
+    </form>
+</template>
+
+<template name="login">
+    <form class = "login">
+        Email <input type="email" name="loginEmail">
+        Password <input type="password" name="loginPassword">
+        <input type="submit" value="Login">
+    </form>
+</template>
+
+<template name="loggedin" id = "message">
+    <p>You're logged in.</p>
+    <p><a href="#" class="logout">Logout</a></p>
+</template>
