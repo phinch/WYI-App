@@ -1,0 +1,85 @@
+/* CSS declarations go here */
+*{
+    margin: 0;
+}
+
+#header{
+    height: 70px;
+    min-width: 1000px;
+}
+
+#title{
+    position: absolute;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #555555;
+    top: 2.8%;
+    margin-left: 5%;
+}
+
+#dashlist{
+    vertical-align: middle;
+    min-width: 600px;
+    height: 50px;
+    text-align: center;
+}
+
+#navigator{
+    margin: auto;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    background: #e8e8e8;
+    width: 550px;
+    vertical-align: middle;
+}
+
+#navigator li{
+    vertical-align: middle;
+    width: 170px;
+    display: inline-block;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    height: 50px;
+    text-align: center;
+}
+
+#navigator a{
+    position: relative;
+    top: 15px;
+    text-decoration: none;
+}
+
+#outer{
+    border-radius: 5%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 650px;
+}
+
+#template{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    height: 95%;
+}
+
+.page-header{
+    font-family: 'Open Sans', sans-serif;
+    color: #555555;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.list-group{
+    list-style: none;
+    font-family: 'Raleway', sans-serif;
+}
+
