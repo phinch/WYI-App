@@ -68,8 +68,12 @@ Template.index.events({
     $( ".nav-pills li" ).not( currentTab ).removeClass( "active" );
 
     template.currentTab.set( currentTab.data( "template" ) );
-  }
-});
+  },
+
+  /*'click': function() {
+        Session.set('dropdown', null);
+    }
+*/});
 
 Template.dashboard.onCreated(function OnCreated() {
   this.currentTab2 = new ReactiveVar( "activities" );
@@ -157,13 +161,29 @@ Template.list_actions.helpers({
   },
 });
 
-Template.list_actions.events({
-  'click listactions li': function( event, template ) {
-    var currentAction = $( event.target ).closest( "li" );
 
-    currentAction.addClass( "active" );
-    $( "listactions li" ).not( currentTab2 ).removeClass( "active" );
+$(document).keyup(function(evt) {
+    if (evt.keyCode === 27) {
+        /*Actions.update({_id:Actions.find({status:"active"})['_id']}, {$set: {status:null}}, {multi: true});*/
+    }
+});
 
-    template.currentAction.set( currentAction.data( "template" ) );
-  }
+
+Template.dropdown_example.active = function () {
+  return this.status === "active";
+};
+
+Template.dropdown_example.events({
+
+    'click li a': function(event, template) {
+        event.preventDefault();
+        event.stopPropagation(); 
+        Actions.update(this._id, {$set: {status: "active"}});
+    },
+
+    'click .close button': function(event) {
+        event.preventDefault();
+        Actions.update(this._id, {$set: {status: null}});
+    }
+
 });
