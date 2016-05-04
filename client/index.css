@@ -3,12 +3,16 @@
     margin: 0;
 }
 
+/********************************************/
+/*GENERAL AND HEADER*/
+/********************************************/
+
 body{
     min-width: 1200px;
 }
 
 #header{
-    height: 70px;
+    height: 100px;
     min-width: 1200px;
 }
 
@@ -65,11 +69,15 @@ input[type=submit]:hover {
     display: inline-block;
     margin-right: 2%; 
 }
+
+/********************************************/
+/*MAIN BODY*/
+/********************************************/
     
 #dashlist{
     vertical-align: middle;
-    min-width: 600px;
-    height: 50px;
+    min-width: 800px;
+    height: 40px;
     text-align: center;
     font-size: 0;
 }
@@ -79,18 +87,18 @@ input[type=submit]:hover {
     text-align: center;
     list-style: none;
     padding: 0;
-    width: 550px;
+    width: 600px;
     vertical-align: middle;
     font-size: 0;
 }
 
 #navigator li{
     vertical-align: middle;
-    width: 170px;
+    width: 150px;
     display: inline-block;
     font-family: 'Raleway', sans-serif;
     font-weight: 600;
-    height: 50px;
+    height: 40px;
     text-align: center;
     font-size: 16px;
     background: #f8f8f8;
@@ -106,9 +114,13 @@ input[type=submit]:hover {
 
 #navigator a{
     position: relative;
-    top: 15px;
+    top: 10px;
     text-decoration: none;
 }
+
+/********************************************/
+/*INNER BODY GENERAL*/
+/********************************************/
 
 #innerdash{
     vertical-align: middle;
@@ -180,7 +192,35 @@ input[type=submit]:hover {
 
 form{
     font-family: 'Raleway', sans-serif;
-    font-weight: 200;
+    font-weight: 300;
     font-size: 14px;
 }
+
+/********************************************/
+/*HOME TAB*/
+/********************************************/
+
+#home{
+    margin-top: 50px;
+}
+
+#home .hello{
+    margin-left: 15%;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #777777;
+    margin-bottom: 30px;
+}
+
+#home .info{
+    margin: 0 0 20px 18%;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+}
+
+/********************************************/
+/*ACTIONS TAB*/
+/********************************************/
+
 
