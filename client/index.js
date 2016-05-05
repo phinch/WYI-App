@@ -91,12 +91,12 @@ Template.dashboard.helpers({
       /*"activities": [
         { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
       ],*/
-      "actions": [
+/*      "actions": [
         { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
       ],
       "reminders": [
         { "name": "Grand Theft Auto V", "creator": "Rockstar Games" },
-      ]
+      ]*/
     };
 
     return { contentType: tab, items: data[tab] };
@@ -184,6 +184,12 @@ Template.dropdown_example.events({
     'click .close button': function(event) {
         event.preventDefault();
         Actions.update(this._id, {$set: {status: null}});
+    },
+
+    'click .submit button': function(event) {
+      event.preventDefault();
+      var selected_activity = Actions.findOne({"_id": this._id})
+      Activities.insert(selected_activity)
     }
 
 });
