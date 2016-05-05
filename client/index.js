@@ -76,7 +76,7 @@ Template.index.events({
 */});
 
 Template.dashboard.onCreated(function OnCreated() {
-  this.currentTab2 = new ReactiveVar( "activities" );
+  this.currentTab2 = new ReactiveVar( "actions" );
 });
 
 Template.dashboard.helpers({
@@ -87,7 +87,7 @@ Template.dashboard.helpers({
     var tab = Template.instance().currentTab2.get();
 
     var data = {
-      "activities": Activities.find({}),
+      "actions": Activities.find({}),
       /*"activities": [
         { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
       ],*/
