@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
+import { Activities}  from '../imports/api/activities.js';
+import { Actions } from '../imports/api/actions.js'
 import './index.html';
 
 if (Meteor.isClient) {
@@ -32,7 +33,7 @@ if (Meteor.isClient) {
   });
 }
 Template.index.onCreated(function helloOnCreated() {
-  this.currentTab = new ReactiveVar( "dashboard" );
+  this.currentTab = new ReactiveVar( "home" );
 });
 
 Template.index.helpers({
@@ -67,8 +68,12 @@ Template.index.events({
     $( ".nav-pills li" ).not( currentTab ).removeClass( "active" );
 
     template.currentTab.set( currentTab.data( "template" ) );
-  }
-});
+  },
+
+  /*'click': function() {
+        Session.set('dropdown', null);
+    }
+*/});
 
 Template.dashboard.onCreated(function OnCreated() {
   this.currentTab2 = new ReactiveVar( "activities" );
@@ -82,9 +87,10 @@ Template.dashboard.helpers({
     var tab = Template.instance().currentTab2.get();
 
     var data = {
-      "activities": [
+      "activities": Activities.find({}),
+      /*"activities": [
         { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
-      ],
+      ],*/
       "actions": [
         { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
       ],
@@ -147,4 +153,57 @@ Template.myprofile.events({
 
     template.currentTab2.set( currentTab2.data( "template" ) );
   }
+});
+
+Template.list_actions.helpers({
+  myactions(){
+    return Actions.find({});
+  },
+});
+
+
+$(document).keyup(function(evt) {
+    if (evt.keyCode === 27) {
+        /*Actions.update({_id:Actions.find({status:"active"})['_id']}, {$set: {status:null}}, {multi: true});*/
+    }
+});
+
+
+Template.dropdown_example.active = function () {
+  return this.status === "active";
+};
+
+Template.dropdown_example.events({
+
+    'click li a': function(event, template) {
+        event.preventDefault();
+        event.stopPropagation(); 
+        Actions.update(this._id, {$set: {status: "active"}});
+    },
+
+    'click .close button': function(event) {
+        event.preventDefault();
+        Actions.update(this._id, {$set: {status: null}});
+    }
+
+});
+/*
+$('#calendar').fullCalendar({
+    dayClick: function(date, jsEvent, view) {
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
+
+    }
+});
+*/
+/*
+$(".fc-day").on("click", function(event){
+    var day = event.target;
+    //var popup = "<div id = 'popup'>{{> Template.dynamic template='actions' data=tabData}}</div>";
+    $(day).css("background", "black");
+});
+*/
+
+$("document").ready(function(){
+
 });

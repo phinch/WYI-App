@@ -76,7 +76,7 @@ Template.index.events({
 */});
 
 Template.dashboard.onCreated(function OnCreated() {
-  this.currentTab2 = new ReactiveVar( "actions" );
+  this.currentTab2 = new ReactiveVar( "activities" );
 });
 
 Template.dashboard.helpers({
@@ -87,16 +87,13 @@ Template.dashboard.helpers({
     var tab = Template.instance().currentTab2.get();
 
     var data = {
-      "actions": Activities.find({}),
-      /*"activities": [
-        { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
-      ],*/
-/*      "actions": [
+      "activities": Activities.find({}),
+      "actions": [
         { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
       ],
       "reminders": [
         { "name": "Grand Theft Auto V", "creator": "Rockstar Games" },
-      ]*/
+      ]
     };
 
     return { contentType: tab, items: data[tab] };
@@ -184,12 +181,6 @@ Template.dropdown_example.events({
     'click .close button': function(event) {
         event.preventDefault();
         Actions.update(this._id, {$set: {status: null}});
-    },
-
-    'click .submit button': function(event) {
-      event.preventDefault();
-      var selected_activity = Actions.findOne({"_id": this._id})
-      Activities.insert(selected_activity)
     }
 
 });
