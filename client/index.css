@@ -220,7 +220,16 @@ form{
 }
 
 /********************************************/
-/*ACTIONS TAB*/
+/*REMINDERS TAB*/
 /********************************************/
-
+.popup{
+    height: 250px;
+    width: 250px;
+    border: 1px solid #cccccc;
+    position: relative;
+    top: -270px;
+    left: -67px;
+    border-radius: 15%;
+    background: #eeeeee;
+}
 
