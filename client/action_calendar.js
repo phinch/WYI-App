@@ -48,6 +48,8 @@ if (Meteor.isClient) {
 
 				}
 			});
+
+		//Todo: Remove duplicates
 		$('.submit').on("click", function() {
 			for (i = 0; i<dates.length; i++) {
 				params = {
@@ -59,6 +61,8 @@ if (Meteor.isClient) {
 			    });
 			    console.log(params)
 				}
+				$(".fc-day").css("background", "white")
+				$(".fc-today").css("background", "#fcf8e3")
 			});
 		}
 	}
