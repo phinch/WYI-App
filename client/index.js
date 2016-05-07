@@ -193,7 +193,10 @@ Template.dropdown_example.events({
     'click .submit button': function(event) {
         event.preventDefault();
         var selected_activity = Actions.findOne({"_id": this._id})
-        Activities.insert(selected_activity)
+        var included = Activities.findOne({"_id": selected_activity._id})
+        if (included === undefined) {
+          Activities.insert(selected_activity)
+        }
     }
 
 });
@@ -221,7 +224,10 @@ Template.reminder_example.events({
     'click .submit button': function(event) {
         event.preventDefault();
         var selected_activity = Actions.findOne({"_id": this._id})
-        Activities.insert(selected_activity)
+        var included = Activities.findOne({"_id": selected_activity._id})
+        if (included === undefined) {
+          Activities.insert(selected_activity)
+        }
     }
 
 });

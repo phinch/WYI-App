@@ -1,2 +1,4 @@
 node_modules/
 client/list_actions.html
+client/index.js
+client/remind_actions.html
