@@ -8,7 +8,6 @@ if (Meteor.isClient) {
                 var events = [];
                 eventlist = Events.find({}).fetch();
                 for (i=0; i<eventlist.length; i++) {
-                    console.log(eventlist[i])
                     events.push({
                         title: eventlist[i].text,
                         start: eventlist[i].date
@@ -23,6 +22,7 @@ if (Meteor.isClient) {
             //Reset
             $("#blackscreen").off("click");
             $(".popup").remove();
+            $("#popup").off("click");
             $(".fc-day").css("background", "white");
             //Turn yellow
             $(event.target).css("background", "#fcf8e3");
@@ -45,7 +45,7 @@ if (Meteor.isClient) {
                     "date": date
                 }
                 Meteor.call('addEvent', params, function(error, result) {
-                    $('#calendar').fullCalendar( 'refetchEvents' );
+                    $('#events-calendar').fullCalendar( 'refetchEvents' );
                 });
                 console.log(params)
             });
