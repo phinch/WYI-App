@@ -303,8 +303,39 @@ li{
     margin-bottom: 20px;
 }
 
+.description h2{
+    font-size: 16px;
+}
+
+.description p{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 #popup button{
     display: inline;
     margin-right: 20px;
+}
+
+button {
+	border-radius: 12px;
+	font-size: 14px;
+	border: none;
+	cursor: pointer;
+	color: white;
+	background-color: #606060;  
+    vertical-align: middle;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+}
+
+.submit {
+	width: 200px;
+	height: 25px;
+}
+
+.close{
+	width: 50px;
+	height: 25px;
 }
 
