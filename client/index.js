@@ -36,6 +36,12 @@ Template.index.onCreated(function helloOnCreated() {
   this.currentTab = new ReactiveVar( "home" );
 });
 
+Template.list_actions.helpers({
+  tab: function() {
+    return new ReactiveVar("action-calendar");
+  }
+});
+
 Template.index.helpers({
   tab: function() {
     return Template.instance().currentTab.get();
