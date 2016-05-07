@@ -7,10 +7,10 @@ Template.reminders.onRendered( () => {
         $(".popup").remove();
         $(".fc-day").css("background", "white");
         //Turn yellow
-        $(event.target).css("background", "#ffeef8");
+        $(event.target).css("background", "#fcf8e3");
 
-        $("body").append("<div id = 'blackscreen'></div>");
-        $("#popup").show();
+        $("#blackscreen").fadeIn();
+        $("#popup").fadeIn();
         console.log($(event.target).attr("data-date"));
         //TODO: Convert to formatted date
         $("#popup .title").html($("#popup .title").html() + $(event.target).attr("data-date"));
@@ -18,8 +18,9 @@ Template.reminders.onRendered( () => {
         console.log(Template.list_actions);
 
         $("#blackscreen").on("click", function(event){
-            $("#popup").hide();
-            $("#blackscreen").remove();
+            $("#popup").fadeOut();
+            $("#blackscreen").fadeOut();
+            $("#popup .title").html("Add a new action: ");
         });
     });
 
