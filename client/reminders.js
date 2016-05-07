@@ -11,16 +11,18 @@ Template.reminders.onRendered( () => {
 
         $("#blackscreen").fadeIn();
         $("#popup").fadeIn();
-        console.log($(event.target).attr("data-date"));
+
         //TODO: Convert to formatted date
         $("#popup .title").html($("#popup .title").html() + $(event.target).attr("data-date"));
-        
-        console.log(Template.list_actions);
 
         $("#blackscreen").on("click", function(event){
             $("#popup").fadeOut();
             $("#blackscreen").fadeOut();
             $("#popup .title").html("Add a new action: ");
+        });
+
+        $("#popup").on("click", "#actions .listactions .description .submit", function(event){
+            console.log("action clicked");
         });
     });
 

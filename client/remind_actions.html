@@ -1,34 +1,33 @@
 <template name="remind_actions">
+    <div id = "actions">
+	    <label class="transportation filter">
+            <input type="checkbox" />
+            Transportation
+          </label>
 
-	<label class="transportation">
-        <input type="checkbox" />
-        Transportation
-      </label>
+         <label class="home filter">
+            <input type="checkbox" />
+            Home
+          </label>
 
-     <label class="home">
-        <input type="checkbox" />
-        Home
-      </label>
-
-	<ul class="listactions" id = "list">
-	   {{#each myactions}}
-        {{> reminder_example}}
-      {{/each}}
-	</ul>
+	    <ul class="listactions" id = "list">
+	       {{#each myactions}}
+            {{> reminder_example}}
+          {{/each}}
+	    </ul>
+    </div>
 
 </template>
 
 <template name="reminder_example">
     {{#if active}}
-    <ul class="close">
-        <button>Close</button>
-      </ul>
+    <div class = "description">
         <h2>{{text}}</h2>
           <p>Description of the activity goes here</p>
-      <ul class="submit">
-        <button>Add this task to your list</button>
-      </ul>
+        <button class = "submit">Add this task to your list</button>
+        <button class = "close">Close</button>
+    </div>
     {{else}}
-        <li><a href="#">{{category}}:{{text}}</a></li>
+        <li><a class="action" href="#">{{text}}</a></li>
     {{/if}}
 </template>
