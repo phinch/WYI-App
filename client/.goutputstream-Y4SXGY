@@ -225,17 +225,13 @@ form{
     z-index: 2;
 }
 
-.fc-other-month{
-    display: none;
-}
-
 #popup{
     display: none;
     height: 400px;
     width: 800px;
     border: 1px solid #cccccc;
     position: absolute;
-    top: 300px;
+    top: 400px;
     left: 260px;
     background: #eeeeee;
     z-index: 2;
@@ -288,23 +284,8 @@ li{
 
 .filter{
     margin-right: 20px;
-    font-weight: 600;
-}
-
-.transportation{
-    margin-left: 20px;
-}
-
-.listactions{
-    margin-top: 20px;
-}
-
-.description{
-    margin-bottom: 20px;
-}
-
-#popup button{
-    display: inline;
-    margin-right: 20px;
+    border: 1px solid #cccccc;
+    border-top-right-radius: 10%;
+    border-top-left-radius: 10%;
 }
 
