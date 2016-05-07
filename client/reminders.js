@@ -2,6 +2,8 @@ Template.reminders.onRendered( () => {
     $( '#events-calendar' ).fullCalendar();
 
     $(".fc-day").on("click", function(event){
+        //Reset
+        $("#blackscreen").off("click");
         $(".popup").remove();
         $(".fc-day").css("background", "white");
         //Turn yellow
@@ -14,6 +16,11 @@ Template.reminders.onRendered( () => {
         $("#popup .title").html($("#popup .title").html() + $(event.target).attr("data-date"));
         
         console.log(Template.list_actions);
+
+        $("#blackscreen").on("click", function(event){
+            $("#popup").hide();
+            $("#blackscreen").remove();
+        });
     });
 
     console.log($("#events-calendar"));
