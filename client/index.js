@@ -36,12 +36,6 @@ Template.index.onCreated(function helloOnCreated() {
   this.currentTab = new ReactiveVar( "home" );
 });
 
-Template.list_actions.helpers({
-  tab: function() {
-    return new ReactiveVar("action-calendar");
-  }
-});
-
 Template.index.helpers({
   tab: function() {
     return Template.instance().currentTab.get();
@@ -93,13 +87,7 @@ Template.dashboard.helpers({
     var tab = Template.instance().currentTab2.get();
 
     var data = {
-      "activities": Activities.find({}),
-      "actions": [
-        { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
-      ],
-      "reminders": [
-        { "name": "Grand Theft Auto V", "creator": "Rockstar Games" },
-      ]
+      "actions": Activities.find({}),
     };
 
     return { contentType: tab, items: data[tab] };
@@ -167,26 +155,39 @@ Template.list_actions.helpers({
 
 $(document).keyup(function(evt) {
     if (evt.keyCode === 27) {
-        /*Actions.update({_id:Actions.find({status:"active"})['_id']}, {$set: {status:null}}, {multi: true});*/
+        Meteor.call('closeAll');
     }
 });
 
 
-Template.dropdown_example.active = function () {
+/*Template.dropdown_example.active = function () {
   return this.status === "active";
-};
+};*/
+
+Template.dropdown_example.helpers({
+  active(){
+    return this.status==="active";
+  }
+})
 
 Template.dropdown_example.events({
 
     'click li a': function(event, template) {
         event.preventDefault();
         event.stopPropagation(); 
+        Meteor.call('closeAll');
         Actions.update(this._id, {$set: {status: "active"}});
     },
 
     'click .close button': function(event) {
         event.preventDefault();
         Actions.update(this._id, {$set: {status: null}});
+    },
+
+    'click .submit button': function(event) {
+        event.preventDefault();
+        var selected_activity = Actions.findOne({"_id": this._id})
+        Activities.insert(selected_activity)
     }
 
 });

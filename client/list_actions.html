@@ -30,14 +30,21 @@
       </ul>
         <h2>{{text}}</h2>
           <p>Description of the activity goes here</p>
-          {{> Template.dynamic template="action_calendar"}}
-         <!-- {{> fullcalendar id="action_calendar" height= 650}} -->
+<!--           {{> Template.dynamic template="action_calendar"}} -->
+      <div id='calendar'>
+<!--       {{> fullcalendar options}} -->
+      {{> actions_calendar }}
+    </div>
       <ul class="submit">
         <button>Add this task to your list</button>
       </ul>
     {{else}}
         <li><a href="#">{{category}}:{{text}}</a></li>
     {{/if}}
+</template>
+
+<template name="actions_calendar">
+    {{rendered}}
 </template>
 
 <!-- <template name="myaction">

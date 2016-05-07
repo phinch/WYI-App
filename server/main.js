@@ -1,7 +1,14 @@
 import { Meteor } from 'meteor/meteor';
+import { Actions } from '../imports/api/actions.js'
 import '../imports/api/activities.js'
-import '../imports/api/actions.js'
 
 Meteor.startup(() => {
   // code to run on server at startup
+  return Meteor.methods({
+
+      closeAll: function() {
+        return Actions.update({}, {$set: {status:null}}, {multi: true});
+      }
+
+    });
 });
