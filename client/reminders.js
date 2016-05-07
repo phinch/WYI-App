@@ -4,9 +4,18 @@ if (Meteor.isClient) {
     Template.reminders.onRendered( () => {
         $( '#events-calendar' ).fullCalendar({
              events: function(start, end, timezone, callback) {
-                callback(Events.find({}).fetch());
-            },
 
+                var events = [];
+                eventlist = Events.find({}).fetch();
+                for (i=0; i<eventlist.length; i++) {
+                    console.log(eventlist[i])
+                    events.push({
+                        title: eventlist[i].text,
+                        start: eventlist[i].date
+                    });
+                }
+                callback(events);
+            },
             height: $("#outer").height() - 20
         });
 
@@ -43,5 +52,9 @@ if (Meteor.isClient) {
         });
 
         console.log($("#events-calendar"));
+    });
+    
+    Tracker.autorun(function() {
+        $('#events-calendar').fullCalendar('refetchEvents');
     });
 }
