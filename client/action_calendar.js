@@ -25,7 +25,7 @@ if (Meteor.isClient) {
 		var name = $('#name').html()
 		$('#calendar').fullCalendar({
 
-			height: 200,
+			height: 200
 	/*		windowResize: function(view) {
 	            	alert("boo!")
 			    	},*/

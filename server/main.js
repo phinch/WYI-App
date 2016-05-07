@@ -13,7 +13,10 @@ Meteor.startup(() => {
 
       addEvent: function(params) {
       	return Events.insert(params);
-      }
+      },
 
+      fetchEvents: function() {
+      	return console.log(Events.find({}));
+      }
     });
 });
