@@ -1,3 +1,4 @@
+import { Events } from '../imports/api/events.js'
 /*Template.dropdown_example.helpers({
 	options: function() {
         return {
@@ -24,12 +25,24 @@ if (Meteor.isClient) {
 		
 		var name = $('#name').html()
 		$('#calendar').fullCalendar({
+			events: function(start, end, timezone, callback) {
 
+                var events = [];
+                eventlist = Events.find({}).fetch();
+                for (i=0; i<eventlist.length; i++) {
+                    console.log(eventlist[i])
+                    events.push({
+                        title: eventlist[i].text,
+                        start: eventlist[i].date
+                    });
+                }
+                callback(events);
+            },
 			height: 200
 	/*		windowResize: function(view) {
 	            	alert("boo!")
 			    	},*/
-	    	});
+	    });
 		$('.fc-day').on("click", function(event){
 			var date = $(event.target)
 
