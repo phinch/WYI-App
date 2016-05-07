@@ -14,7 +14,7 @@ Template.reminders.onRendered( () => {
 
         //TODO: Convert to formatted date
         $("#popup .title").html($("#popup .title").html() + $(event.target).attr("data-date"));
-
+        var date = $(event.target).attr("data-date");
         $("#blackscreen").on("click", function(event){
             $("#popup").fadeOut();
             $("#blackscreen").fadeOut();
@@ -22,7 +22,14 @@ Template.reminders.onRendered( () => {
         });
 
         $("#popup").on("click", "#actions .listactions .description .submit", function(event){
-            console.log("action clicked");
+            params = {
+                "text": $("#popup #actiontitle").html(),
+                "date": date
+            }
+            Meteor.call('addEvent', params, function(error, result) {
+                $('#calendar').fullCalendar( 'refetchEvents' );
+            });
+            console.log(params)
         });
     });
 
