@@ -18,32 +18,47 @@
     }
 });
 */
+if (Meteor.isClient) {
+	Template.actions_calendar.rendered = function(){
+		dates = []
+		
+		var name = $('#name').html()
+		$('#calendar').fullCalendar({
 
-Template.actions_calendar.rendered = function(){
-	dates = []
-	$('#calendar').fullCalendar({
+			height: 200,
+	/*		windowResize: function(view) {
+	            	alert("boo!")
+			    	},*/
+	    	});
+		$('.fc-day').on("click", function(event){
+			var date = $(event.target)
 
-		height: 200,
-/*		windowResize: function(view) {
-            	alert("boo!")
-		    	},*/
-    	});
-	$('.fc-day').on("click", function(event){
-		var date = $(event.target)
+			if (date.hasClass("clicked") === false){
+				date.addClass("clicked");
+				date.css("background", "black");
+				var dateClicked = date.attr("data-date");
+				dates.push(dateClicked)
 
-		if (date.hasClass("clicked") === false){
-			date.addClass("clicked");
-			date.css("background", "black");
-			var dateClicked = date.attr("data-date");
-			dates.push(dateClicked)
-			console.log(dates)
-		} else {
-			date.removeClass("clicked");
-			date.css("background", "white");
-			var dateClicked = date.attr("data-date");
-			var index = dates.indexOf(dateClicked);
-			dates.splice(index, 1);
-			console.log(dates)
-			}
-		});
+			} else {
+				date.removeClass("clicked");
+				date.css("background", "white");
+				var dateClicked = date.attr("data-date");
+				var index = dates.indexOf(dateClicked);
+				dates.splice(index, 1);
+
+				}
+			});
+		$('.submit').on("click", function() {
+			for (i = 0; i<dates.length; i++) {
+				params = {
+			      "text": name,
+			      "date": dates[i]
+			    }
+			    Meteor.call('addEvent', params, function(error, result) {
+			        $('#calendar').fullCalendar( 'refetchEvents' );
+			    });
+			    console.log(params)
+				}
+			});
+		}
 	}

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Actions } from '../imports/api/actions.js'
+import { Events } from '../imports/api/events.js'
 import '../imports/api/activities.js'
 
 Meteor.startup(() => {
@@ -8,6 +9,10 @@ Meteor.startup(() => {
 
       closeAll: function() {
         return Actions.update({}, {$set: {status:null}}, {multi: true});
+      },
+
+      addEvent: function(params) {
+      	return Events.insert(params);
       }
 
     });
