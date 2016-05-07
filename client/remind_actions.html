@@ -1,0 +1,35 @@
+<template name="remind_actions">
+
+	<label class="transportation">
+        <input type="checkbox" />
+        Transportation
+      </label>
+
+     <label class="home">
+        <input type="checkbox" />
+        Home
+      </label>
+
+	<ul class="listactions" id = "list">
+	   {{#each myactions}}
+        {{> reminder_example}}
+      {{/each}}
+	</ul>
+
+	<!-- {{> Template.dynamic template="action_description" data=tabData}} -->
+</template>
+
+<template name="reminder_example">
+    {{#if active}}
+    <ul class="close">
+        <button>Close</button>
+      </ul>
+        <h2>{{text}}</h2>
+          <p>Description of the activity goes here</p>
+      <ul class="submit">
+        <button>Add this task to your list</button>
+      </ul>
+    {{else}}
+        <li><a href="#">{{category}}:{{text}}</a></li>
+    {{/if}}
+</template>

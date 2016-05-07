@@ -6,9 +6,13 @@ Template.reminders.onRendered( () => {
         $(".fc-day").css("background", "white");
         //Turn yellow
         $(event.target).css("background", "#ffeef8");
+
+        $("body").append("<div id = 'blackscreen'></div>");
+        $("#popup").show();
+        console.log($(event.target).attr("data-date"));
+        //TODO: Convert to formatted date
+        $("#popup .title").html($("#popup .title").html() + $(event.target).attr("data-date"));
         
-        //Popup div
-        $(event.target).append("<div class = 'popup'>"+Template.list_actions.renderFunction+"</div>");
         console.log(Template.list_actions);
     });
 

@@ -1,6 +1,7 @@
 /* CSS declarations go here */
 *{
     margin: 0;
+    z-index: 1;
 }
 
 /********************************************/
@@ -222,14 +223,29 @@ form{
 /********************************************/
 /*REMINDERS TAB*/
 /********************************************/
-.popup{
-    height: 250px;
-    width: 250px;
+.fc-body{
+    z-index: 2;
+}
+
+#popup{
+    display: none;
+    height: 400px;
+    width: 800px;
     border: 1px solid #cccccc;
-    position: relative;
-    top: -270px;
-    left: -67px;
-    border-radius: 15%;
+    position: absolute;
+    top: 400px;
+    left: 260px;
     background: #eeeeee;
+    z-index: 2;
+}
+
+#blackscreen{
+    position: absolute;
+    opacity: 0.65;
+    background: black;
+    height: 1250px;
+    width: 1250px;
+    top: 0;
+    left: 0;
 }
 

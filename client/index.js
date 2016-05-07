@@ -152,6 +152,12 @@ Template.list_actions.helpers({
   },
 });
 
+Template.remind_actions.helpers({
+  myactions(){
+    return Actions.find({});
+  },
+});
+
 
 $(document).keyup(function(evt) {
     if (evt.keyCode === 27) {
@@ -171,6 +177,34 @@ Template.dropdown_example.helpers({
 })
 
 Template.dropdown_example.events({
+
+    'click li a': function(event, template) {
+        event.preventDefault();
+        event.stopPropagation(); 
+        Meteor.call('closeAll');
+        Actions.update(this._id, {$set: {status: "active"}});
+    },
+
+    'click .close button': function(event) {
+        event.preventDefault();
+        Actions.update(this._id, {$set: {status: null}});
+    },
+
+    'click .submit button': function(event) {
+        event.preventDefault();
+        var selected_activity = Actions.findOne({"_id": this._id})
+        Activities.insert(selected_activity)
+    }
+
+});
+
+Template.reminder_example.helpers({
+  active(){
+    return this.status==="active";
+  }
+})
+
+Template.reminder_example.events({
 
     'click li a': function(event, template) {
         event.preventDefault();
