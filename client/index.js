@@ -155,11 +155,35 @@ Template.myprofile.events({
   }
 });
 
+Template.list_actions.onCreated(function created() {
+  this.actionitems = new ReactiveVar( Actions.find({}) );
+});
+
+Template.list_actions.helpers({
+  myactions: function() {
+    return Template.instance().actionitems.get();
+  }
+});
+/*
 Template.list_actions.helpers({
   myactions(){
     return Actions.find({});
   },
 });
+*/
+
+
+Template.list_actions.events({
+  'click #filter': function(event, template) {
+    event.preventDefault();
+    var val = []
+    $(':checkbox:checked').each(function(i){
+      val[i] = $(this).val();
+    })
+
+    template.actionitems.set(Actions.find({"category": {"$in" : val}}))
+  }
+})
 
 Template.remind_actions.helpers({
   myactions(){

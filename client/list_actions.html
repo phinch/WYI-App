@@ -1,14 +1,21 @@
 <template name="list_actions">
 
-	<label class="transportation">
-        <input type="checkbox" />
+	   <label class="transportation">
+        <input type="checkbox" value="Transportation" checked/>
         Transportation
       </label>
 
      <label class="home">
-        <input type="checkbox" />
+        <input type="checkbox" value="Home" checked />
         Home
       </label>
+
+      <label class="home">
+        <input type="checkbox" value="Recycling" checked />
+        Recycling
+      </label>
+      
+      <input type="button" id="filter" name="filter" value = "Filter" />
 
 	<ul class="listactions" id = "list">
 	   {{#each myactions}}
