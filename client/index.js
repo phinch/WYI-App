@@ -185,11 +185,27 @@ Template.list_actions.events({
   }
 })
 
-Template.remind_actions.helpers({
-  myactions(){
-    return Actions.find({});
-  },
+Template.remind_actions.onCreated(function created() {
+  this.actionitems2 = new ReactiveVar( Actions.find({}) );
 });
+
+Template.remind_actions.helpers({
+  myactions: function() {
+    return Template.instance().actionitems2.get();
+  }
+});
+
+Template.remind_actions.events({
+  'click #actions #filter2': function(event, template) {
+    event.preventDefault();
+    var val = []
+    $(':checkbox:checked').each(function(i){
+      val[i] = $(this).val();
+    })
+    console.log(val)
+    template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
+  }
+})
 
 
 $(document).keyup(function(evt) {

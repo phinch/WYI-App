@@ -1,21 +1,29 @@
 <template name="remind_actions">
     <div id = "actions">
 	    <label class="transportation filter">
-            <input type="checkbox" />
-            Transportation
-          </label>
+        <input type="checkbox" value="Transportation" checked/>
+        Transportation
+      </label>
 
-         <label class="home filter">
-            <input type="checkbox" />
-            Home
-          </label>
+     <label class="home filter">
+        <input type="checkbox" value="Home" checked />
+        Home
+      </label>
 
-	    <ul class="listactions" id = "list">
-	       {{#each myactions}}
-            {{> reminder_example}}
-          {{/each}}
-	    </ul>
+      <label class="recycle filter">
+        <input type="checkbox" value="Recycling" checked />
+        Recycling
+      </label>
+      
+      <input type="button" id="filter2" name="filter2" value = "Filter" />
+
     </div>
+
+    <ul class="listactions" id = "list">
+     {{#each myactions}}
+        {{> reminder_example}}
+      {{/each}}
+  </ul>
 
 </template>
 

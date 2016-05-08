@@ -4,6 +4,9 @@ import { Activities } from '../imports/api/activities.js'
 if (Meteor.isClient) {
 	Template.actions_calendar.rendered = function(){
 		
+		var clicks = 0;
+        var timer;
+
 		var name = $('#name').html()
 		$('#calendar').fullCalendar({
 			events: function(start, end, timezone, callback) {
@@ -20,16 +23,32 @@ if (Meteor.isClient) {
                 callback(events);
             },
             eventClick: function(calEvent, jsEvent, view) {
-            	Meteor.call('deleteEvent', calEvent, function(error, result){
-            		$('#calendar').fullCalendar( 'refetchEvents' );
-            		var included = Events.findOne({"text": calEvent.title})
-        			if (included === undefined) {
-          				Meteor.call('deleteActivity', calEvent.title)
-        			}	
-            	});
-            	
+            	clicks++;  //count clicks
+                if(clicks === 1) {
+                    timer = setTimeout(function() {
+/*                        var eventclick = $(jsEvent.target).closest("td");
+                        var thisday = eventclick.index();
+                        var thisweek = eventclick.closest(".fc-week").index();
+                        var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
+                        console.log(findweek[0]);
+                        var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
+                        var date = findday.attr("data-date");
+                        popit(date); */
+                        clicks = 0;             //after action performed, reset counter
+                    }, 500);
+                } else {
+                    clearTimeout(timer);    //prevent single-click action
+                    Meteor.call('deleteEvent', calEvent, function(error, result){
+                        $('#calendar').fullCalendar( 'refetchEvents' );
+                        var included = Events.findOne({"text": calEvent.title})
+                        if (included === undefined) {
+                            Meteor.call('deleteActivity', calEvent.title)
+                        }
+                    });
+                    clicks = 0;             //after action performed, reset counter
+                }
             },
-
+         
 			height: 200
 	/*		windowResize: function(view) {
 	            	alert("boo!")
