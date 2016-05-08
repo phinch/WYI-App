@@ -1,4 +1,5 @@
 import { Events } from '../imports/api/events.js'
+import { Activities } from '../imports/api/activities.js'
 
 if (Meteor.isClient) {
     Template.reminders.onRendered( () => {
@@ -19,6 +20,10 @@ if (Meteor.isClient) {
             eventClick: function(calEvent, jsEvent, view) {
                 Meteor.call('deleteEvent', calEvent, function(error, result){
                     $('#events-calendar').fullCalendar( 'refetchEvents' );
+                    var included = Events.findOne({"text": calEvent.title})
+                    if (included === undefined) {
+                    Meteor.call('deleteActivity', calEvent.title)
+                    }   
                 });
             },
 
