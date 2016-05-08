@@ -1,34 +1,14 @@
 import { Events } from '../imports/api/events.js'
-/*Template.dropdown_example.helpers({
-	options: function() {
-        return {
-            height: 200,
-            windowResize: function(view) {
-            	alert("boo!")
-		    	},
-		    dayClick: function(date, jsEvent, view) {
-		    	alert('Clicked on: ' + date.format());
 
-			    alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-			    alert('Current view: ' + view.name);
-
-		        $(this).css('background', 'red');
-			}
-        }
-    }
-});
-*/
 if (Meteor.isClient) {
 	Template.actions_calendar.rendered = function(){
-		dates = []
 		
 		var name = $('#name').html()
 		$('#calendar').fullCalendar({
 			events: function(start, end, timezone, callback) {
 
                 var events = [];
-                eventlist = Events.find({}).fetch();
+                eventlist = Events.find({"text": name}).fetch();
                 for (i=0; i<eventlist.length; i++) {
                     events.push({
                         title: eventlist[i].text,
@@ -50,9 +30,22 @@ if (Meteor.isClient) {
 			    	},*/
 	    });
 		$('.fc-day').on("click", function(event){
-			var date = $(event.target)
+			var dateClicked = $(event.target).attr("data-date");
 
-			if (date.hasClass("clicked") === false){
+			params = {
+			      "text": name,
+			      "date": dateClicked
+			}
+
+			var included = Events.findOne({"text": name, "date": dateClicked})
+        	if (included === undefined) {
+          		Meteor.call('addEvent', params, function(error, result) {
+			    	$('#calendar').fullCalendar( 'refetchEvents' );
+				});
+        	}	
+			
+
+			/*if (date.hasClass("clicked") === false){
 				date.addClass("clicked");
 				date.css("background", "black");
 				var dateClicked = date.attr("data-date");
@@ -65,11 +58,11 @@ if (Meteor.isClient) {
 				var index = dates.indexOf(dateClicked);
 				dates.splice(index, 1);
 
-				}
-			});
+				}*/
+		});
 
 		//Todo: Remove duplicates
-		$('.submit').on("click", function() {
+		/*$('.submit').on("click", function() {
 			for (i = 0; i<dates.length; i++) {
 				params = {
 			      "text": name,
@@ -82,6 +75,6 @@ if (Meteor.isClient) {
 				}
 				$(".fc-day").css("background", "white")
 				$(".fc-today").css("background", "#fcf8e3")
-			});
+			});*/
 		}
 	}

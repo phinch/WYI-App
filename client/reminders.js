@@ -50,12 +50,18 @@ if (Meteor.isClient) {
                     "text": $("#popup #actiontitle").html(),
                     "date": date
                 }
-                Meteor.call('addEvent', params, function(error, result) {
-                    $('#events-calendar').fullCalendar( 'refetchEvents' );
-                });
-                $("#popup").fadeOut();
-                $("#blackscreen").fadeOut();
-                $("#popup .title").html("Add a new action: ");
+                var included = Events.findOne({"text": $("#popup #actiontitle").html(), "date": date})
+                if (included === undefined) {
+                    Meteor.call('addEvent', params, function(error, result) {
+                        $('#events-calendar').fullCalendar( 'refetchEvents' );
+                    });
+                    $("#popup").fadeOut();
+                    $("#blackscreen").fadeOut();
+                    $("#popup .title").html("Add a new action: ");
+                }
+                else {
+                    alert("This action is already present on the selected date.")
+                }      
             });
         });
         $(".fc-prev-button").css("border-radius", "12px 0 0 12px");
@@ -64,7 +70,6 @@ if (Meteor.isClient) {
         $("#outer").on("click", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", popit);
         $("#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number").on("click", popit);
 
-        console.log($("#events-calendar"));
     });
     
     Tracker.autorun(function() {
@@ -99,9 +104,17 @@ function popit(event){
             "text": $("#popup #actiontitle").html(),
             "date": date
         }
-        Meteor.call('addEvent', params, function(error, result) {
-            $('#events-calendar').fullCalendar( 'refetchEvents' );
-        });
-        console.log(params)
+        var included = Events.findOne({"text": $("#popup #actiontitle").html(), "date": date})
+        if (included === undefined) {
+            Meteor.call('addEvent', params, function(error, result) {
+                $('#events-calendar').fullCalendar( 'refetchEvents' );
+            });
+            $("#popup").fadeOut();
+            $("#blackscreen").fadeOut();
+            $("#popup .title").html("Add a new action: ");
+        }
+        else {
+            alert("This action is already present on the selected date.")
+        }  
     });
 }
