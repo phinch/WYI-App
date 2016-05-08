@@ -22,13 +22,11 @@ if (Meteor.isClient) {
             },
 
             eventClick: function(calEvent, jsEvent, view) {
-                Meteor.call('deleteEvent', calEvent, function(error, result){
+/*                Meteor.call('deleteEvent', calEvent, function(error, result){
                     $('#events-calendar').fullCalendar( 'refetchEvents' );
-                    var included = Events.findOne({"text": calEvent.title})
-                    if (included === undefined) {
-                    Meteor.call('deleteActivity', calEvent.title)
+                    
                     }   
-                });
+                });*/
                 clicks++;  //count clicks
                 if(clicks === 1) {
                     timer = setTimeout(function() {
@@ -46,6 +44,10 @@ if (Meteor.isClient) {
                     clearTimeout(timer);    //prevent single-click action
                     Meteor.call('deleteEvent', calEvent, function(error, result){
                         $('#events-calendar').fullCalendar( 'refetchEvents' );
+                        var included = Events.findOne({"text": calEvent.title})
+                         if (included === undefined) {
+                            Meteor.call('deleteActivity', calEvent.title)
+                        }
                     });
                     clicks = 0;             //after action performed, reset counter
                 }
