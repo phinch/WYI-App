@@ -17,6 +17,10 @@ Meteor.startup(() => {
 
       fetchEvents: function() {
       	return console.log(Events.find({}));
+      },
+
+      deleteEvent: function(event) {
+      	return Events.remove({"_id": event.id})
       }
     });
 });

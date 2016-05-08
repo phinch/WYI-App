@@ -10,14 +10,22 @@ if (Meteor.isClient) {
                 for (i=0; i<eventlist.length; i++) {
                     events.push({
                         title: eventlist[i].text,
-                        start: eventlist[i].date
+                        start: eventlist[i].date,
+                        id: eventlist[i]._id
                     });
                 }
                 callback(events);
             },
-            height: $("#outer").height() - 20
-        });
+            eventClick: function(calEvent, jsEvent, view) {
+                Meteor.call('deleteEvent', calEvent, function(error, result){
+                    $('#events-calendar').fullCalendar( 'refetchEvents' );
+                });
+            },
 
+            height: $("#outer").height() - 20
+
+
+        });
         $(".fc-day").on("click", function(event){
             //Reset
             $("#blackscreen").off("click");
@@ -47,7 +55,9 @@ if (Meteor.isClient) {
                 Meteor.call('addEvent', params, function(error, result) {
                     $('#events-calendar').fullCalendar( 'refetchEvents' );
                 });
-                console.log(params)
+                $("#popup").fadeOut();
+                $("#blackscreen").fadeOut();
+                $("#popup .title").html("Add a new action: ");
             });
         });
 

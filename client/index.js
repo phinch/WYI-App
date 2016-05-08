@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Activities}  from '../imports/api/activities.js';
 import { Actions } from '../imports/api/actions.js'
+import { Events } from '../imports/api/events.js'
 import './index.html';
 
 if (Meteor.isClient) {
@@ -36,27 +37,35 @@ Template.index.onCreated(function helloOnCreated() {
   this.currentTab = new ReactiveVar( "home" );
 });
 
+function GetTodayDate() {
+   var tdate = new Date();
+   var dd = tdate.getDate(); //yields day
+   if (dd<10) {
+      dd = "0" + dd
+   }
+   var MM = tdate.getMonth(); //yields month
+   if (MM<10) {
+      MM = "0" + (MM+1)
+   }
+   var yyyy = tdate.getFullYear(); //yields year
+   var xxx = yyyy + "-" + MM + "-" + dd;
+
+   return xxx;
+}
+
 Template.index.helpers({
   tab: function() {
     return Template.instance().currentTab.get();
   },
   tabData: function() {
     var tab = Template.instance().currentTab.get();
-
-    /*var data = {
-      "activities": [
-        { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
-      ],
-      "actions": [
-        { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
-      ],
-      "reminders": [
-        { "name": "Grand Theft Auto V", "creator": "Rockstar Games" },
-      ]
-    };*/
-/*
-    return { contentType: tab, items: data[tab] };*/
-    return { contentType: tab}
+    var now = GetTodayDate();
+    var data = {
+      "home": Events.find({"date": now}),
+    };
+    console.log(data[tab])
+    console.log(tab)
+    return { contentType: tab, items: data[tab] }
   }
 });
 

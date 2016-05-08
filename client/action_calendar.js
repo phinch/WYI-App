@@ -30,14 +30,20 @@ if (Meteor.isClient) {
                 var events = [];
                 eventlist = Events.find({}).fetch();
                 for (i=0; i<eventlist.length; i++) {
-                    console.log(eventlist[i])
                     events.push({
                         title: eventlist[i].text,
-                        start: eventlist[i].date
+                        start: eventlist[i].date,
+                        id: eventlist[i]._id
                     });
                 }
                 callback(events);
             },
+            eventClick: function(calEvent, jsEvent, view) {
+            	Meteor.call('deleteEvent', calEvent, function(error, result){
+            		$('#calendar').fullCalendar( 'refetchEvents' );
+            	});
+            },
+
 			height: 200
 	/*		windowResize: function(view) {
 	            	alert("boo!")

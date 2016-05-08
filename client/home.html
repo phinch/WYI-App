@@ -4,4 +4,12 @@
       <h3 class = "info">You have saved <strong>30t</strong> of CO2</h3>
       <h3 class = "info">You have saved <strong>$2,242</strong></h3>
     </div>
+
+    <h3>Today's Tasks</h3>
+    <div id ="today-list">
+    {{#each this.items}}
+      <li class="list-group-item"><strong>{{text}}</strong></li>
+    {{/each}}
+	</div>
 </template>
+
