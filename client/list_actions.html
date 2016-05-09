@@ -27,17 +27,12 @@
 <template name="dropdown_example">
     {{#if active}}
     <div class = "description">
-            <h2 id='name'>{{text}}</h2>
-              <p>Description of the activity goes here</p>
-          <div id='calendar'>
-          {{> actions_calendar }}
+        <h2 id='name'>{{text}}</h2>
+        <p>Description of the activity goes here. Click a date and commit to taking action!</p>
+        <div id='calendar'>
+            {{> action_calendar }}
         </div>
-          <ul class="submit">
-            <button>Add this task to your list</button>
-          </ul>
-        <ul class="close">
-            <button>Close</button>
-          </ul>
+        <button class = "close">Close</button>
     </div>
     {{else}}
         <li class = "action"><a href="#">{{text}}</a></li>

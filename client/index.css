@@ -252,6 +252,12 @@ form{
     background: #ff4a48;
     color: black;
 }
+
+.none{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    display: none;
+}
 /********************************************/
 /*REMINDERS TAB*/
 /********************************************/
@@ -416,4 +422,22 @@ button {
     margin-top: 10px;
     margin-left: 40px;
     margin-bottom: 20px;
+}
+
+label{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+.listactions .description .close{
+    margin-left: 40px;
+}
+
+a{
+    text-decoration: none;
+    color: #666666;
+}
+
+a:hover{
+    color: #222222;
 }

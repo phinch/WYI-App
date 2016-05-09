@@ -236,12 +236,12 @@ Template.dropdown_example.events({
         Actions.update(this._id, {$set: {status: "active"}});
     },
 
-    'click .close button': function(event) {
+    'click .close': function(event) {
         event.preventDefault();
         Actions.update(this._id, {$set: {status: null}});
     },
 
-    'click .submit button': function(event) {
+    'click .submit': function(event) {
         event.preventDefault();
         var selected_activity = Actions.findOne({"_id": this._id})
         var included = Activities.findOne({"_id": selected_activity._id})
