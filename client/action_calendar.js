@@ -78,10 +78,13 @@ if (Meteor.isClient) {
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
 		        var dateClicked = $(event.target).attr("data-date");
 
-		        params = {
-		              "text": name,
-		              "date": dateClicked
-		        }
+		         params = {
+                  "text": name,
+                  "date": dateClicked,
+                    "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
+                    "money": parseInt($("#moneysave").html().split('$')[1])
+                }
+
 
 		        var included = Events.findOne({"text": name, "date": dateClicked})
             	if (included === undefined) {
@@ -96,8 +99,10 @@ if (Meteor.isClient) {
 		        var dateClicked = $(event.target).attr("data-date");
 
 		        params = {
-		              "text": name,
-		              "date": dateClicked
+		          "text": name,
+		          "date": dateClicked,
+                    "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
+                    "money": parseInt($("#moneysave").html().split('$')[1])
 		        }
 
 		        var included = Events.findOne({"text": name, "date": dateClicked})
@@ -109,13 +114,13 @@ if (Meteor.isClient) {
                 }
 	        });
 
-            $("#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day").each(function() {
+/*            $("#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day").each(function() {
                 $(this).droppable({
                     drop: function( event, ui ) {
                         alert(event)
                     }   
                 });
-            });
+            });*/
 
 
             $('#calendar .fc-event').each(function() {
@@ -129,10 +134,13 @@ if (Meteor.isClient) {
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
 		        var dateClicked = getdate(event);
 
-		        params = {
-		              "text": name,
-		              "date": dateClicked
-		        }
+		         params = {
+                  "text": name,
+                  "date": dateClicked,
+                    "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
+                    "money": parseInt($("#moneysave").html().split('$')[1])
+                }
+
 
 		        var included = Events.findOne({"text": name, "date": dateClicked})
             	if (included === undefined) {

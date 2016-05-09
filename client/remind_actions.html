@@ -23,7 +23,7 @@
         {{> reminder_example}}
       {{/each}}
   </ul>
-  
+
     </div>
 
     
@@ -35,6 +35,8 @@
     <div class = "description">
         <h2 id = "actiontitle">{{text}}</h2>
           <p>Description of the activity goes here</p>
+          <p id='carbonsave'>This action can save {{carbon}}t of carbon.</p>
+          <p id='moneysave'>This action can save ${{money}}.</p>
         <button class = "submit">Add this task to your list</button>
         <button class = "close">Close</button>
     </div>

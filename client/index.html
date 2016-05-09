@@ -11,12 +11,14 @@
 
      {{#if currentUser}}
         {{> loggedin}}
+        {{> index}}
     {{else}}
         {{> register}}
         {{> login}}
+        <p>Login or become a quadrilateral</p>
     {{/if}}
 
-  {{> index}}
+ 
 </body>
 
 

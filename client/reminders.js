@@ -145,7 +145,9 @@ function popit(date){
     $("#popup").on("click", "#actions .listactions .description .submit", function(event){
         params = { 
             "text": $("#popup #actiontitle").html(),
-            "date": date
+            "date": date,
+            "carbon": parseInt($("#popup #carbonsave").html().split(' ')[4]),
+            "money": parseInt($("#popup #moneysave").html().split('$')[1])
         }
         var included = Events.findOne({"text": $("#popup #actiontitle").html(), "date": date})
         if (included === undefined) {

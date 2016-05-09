@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Activities}  from '../imports/api/activities.js';
 import { Actions } from '../imports/api/actions.js'
 import { Events } from '../imports/api/events.js'
+import { UserInfo } from '../imports/api/userinfo.js'
 import './index.html';
 
 if (Meteor.isClient) {
@@ -11,10 +12,16 @@ if (Meteor.isClient) {
             event.preventDefault();
             var emailVar = event.target.registerEmail.value;
             var passwordVar = event.target.registerPassword.value;
+            params = {
+              "userID": emailVar,
+              "carbon": 0,
+              "money": 0
+            }
             Accounts.createUser({
                 email: emailVar,
                 password: passwordVar
             });
+            Meteor.call("insertUser", params);
         }
     });
 
@@ -80,12 +87,15 @@ Template.home.helpers({
   tabData: function() {
     var tab = Template.instance().currentTab.get();
     var now = GetTodayDate();
+    var currentUser = UserInfo.findOne({"userID": Meteor.user().emails[0].address})
+    var carbonnumber = currentUser.carbon
+    var moneynumber = currentUser.money
     var data = {
       "saved": Events.find({"date": now}),
     };
     console.log(data[tab])
     console.log(tab)
-    return { contentType: tab, items: data[tab] }
+    return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
 });
 

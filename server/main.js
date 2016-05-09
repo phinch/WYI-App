@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Actions } from '../imports/api/actions.js'
 import { Events } from '../imports/api/events.js'
 import { Activities} from '../imports/api/activities.js'
+import { UserInfo} from '../imports/api/userinfo.js'
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -13,6 +14,18 @@ Meteor.startup(() => {
 
       addEvent: function(params) {
       	return Events.insert(params);
+      },
+
+      insertUser: function(params) {
+      	return UserInfo.insert(params);
+      },
+
+      updateCarbon: function(user, carbon) {
+      	return UserInfo.update({"userID": user}, {$set:{"carbon": carbon}})
+      },
+
+      updateMoney: function(user, money) {
+        return UserInfo.update({"userID": user}, {$set:{"money": money}})
       },
 
       fetchEvents: function() {

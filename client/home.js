@@ -1,3 +1,6 @@
+import { UserInfo} from '../imports/api/userinfo.js'
+import { Events } from '../imports/api/events.js'
+
 if (Meteor.isClient) {
     //TODO: On .complete button click, change the CO2 and money values and remove event
     //TODO: On .failed button click, just remove the actions
@@ -13,13 +16,26 @@ if (Meteor.isClient) {
         $(event.target).closest(".todo").slideUp(); //woosh
         var action = $(event.target).closest(".todo").find(".list-group-item").html();
         var date = GetTodayDate()
-        Meteor.call('deleteTodayDate', action, date)
         var faded = 0;
         $(".info").fadeOut(function(){
             if(faded == 0){
                 faded ++;
-                $(".carbon").html((parseInt($(".carbon").html().split('t')[0]) + 2)+"t");
-                $(".money").html('$' + (parseInt($(".money").html().split('$')[1].replace(/,/g, "")) + 123).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                var myEvent = Events.findOne({"date": date, "text": action})
+                var addedCarbon = myEvent.carbon
+                var addedMoney = myEvent.money
+                var currentUser = UserInfo.findOne({"userID": Meteor.user().emails[0].address})
+                var carbonnumber = currentUser.carbon
+                var moneynumber = currentUser.money
+                carbonnumber += addedCarbon
+                moneynumber += addedMoney
+                console.log(carbonnumber)
+                console.log(moneynumber)
+                Meteor.call('updateCarbon', currentUser.userID, carbonnumber)
+                Meteor.call('updateMoney', currentUser.userID, moneynumber, function(error, result) {
+                  console.log(result)
+                  console.log(error)
+                  Meteor.call('deleteTodayDate', action, date)
+                });
                 $(".info").fadeIn();
             }
             checkevents();
