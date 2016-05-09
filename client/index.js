@@ -195,8 +195,10 @@ Template.remind_actions.helpers({
   }
 });
 
+/*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
 Template.remind_actions.events({
-  'click #actions #filter2': function(event, template) {
+  'click #filter2': function(event, template) {
     event.preventDefault();
     var val = []
     $(':checkbox:checked').each(function(i){

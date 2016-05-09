@@ -27,6 +27,10 @@ Meteor.startup(() => {
       	return Events.remove({"_id": event.id})
       },
 
+      deleteTodayDate: function(text, date) {
+      	return Events.remove({"text": text, "date": date})
+      },
+
       deleteActivity: function(text) {
       	return Activities.remove({"text": text})
       }
