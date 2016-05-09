@@ -21,6 +21,16 @@ if (Meteor.isClient) {
                 callback(events);
             },
 
+            eventMouseover: function(calEvent, jsEvent, view){
+                var date = getdate(jsEvent);
+                var events = getevents(date);
+                hoverbubble(date, events);
+            },
+
+            eventMouseout: function(calEvent, jsEvent, view){
+                $(".dayevents").remove();
+            },
+
             eventClick: function(calEvent, jsEvent, view) {
 /*                Meteor.call('deleteEvent', calEvent, function(error, result){
                     $('#events-calendar').fullCalendar( 'refetchEvents' );
@@ -30,16 +40,11 @@ if (Meteor.isClient) {
                 clicks++;  //count clicks
                 if(clicks === 1) {
                     timer = setTimeout(function() {
-                        var eventclick = $(jsEvent.target).closest("td");
-                        var thisday = eventclick.index();
-                        var thisweek = eventclick.closest(".fc-week").index();
-                        var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
-                        console.log(findweek[0]);
-                        var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
-                        var date = findday.attr("data-date");
+
+                        var date = getdate(jsEvent);
                         popit(date); 
                         clicks = 0;             //after action performed, reset counter
-                    }, 500);
+                    }, 300);
                 } else {
                     clearTimeout(timer);    //prevent single-click action
                     Meteor.call('deleteEvent', calEvent, function(error, result){
@@ -69,28 +74,60 @@ if (Meteor.isClient) {
             popit(date);
         });
 
-        $("#outer").on("click", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td:not(.fc-event-container)", function(event){
-            var eventclick = $(event.target).closest("td");
-            if(eventclick.attr("class") != ".fc-event-container"){ //We have a separate event handler for clicking an fc-event
-                var thisday = eventclick.index();
-                var thisweek = eventclick.closest(".fc-week").index();
-                var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
-                console.log(findweek[0]);
-                var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
-                var date = findday.attr("data-date");
-                popit(date);
-            }
+        $("#outer").on("click", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
+            var date = getdate(event);
+            popit(date);
         });
+
+        $("#outer").on("click", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
+            event.stopPropogation();
+        });
+         
 
         //HOVER EVENTS
         $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
-            console.log("hovering...");
-            var eventclick = $(event.target);
-            var thisday = eventclick.index();
-            var thisweek = eventclick.closest(".fc-week").index();
-            var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
-            var findtbody = $(findweek).find(".fc-content-skeleton table tbody");
-            hoverbubble(findtbody, thisday);
+            var date = $(event.target).attr("data-date");
+            var events = getevents(date);
+            hoverbubble(date, events);
+        });
+
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
+            $(".dayevents").remove();
+        });
+
+        $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number", function(event){
+            var date = $(event.target).attr("data-date");
+            var events = getevents(date);
+            hoverbubble(date, events);
+        });
+
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number", function(event){
+            $(".dayevents").remove();
+        });
+
+        $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
+            $("#outer").off("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a");
+            var date = getdate(event);
+            var events = getevents(date);
+            hoverbubble(date, events);
+            $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
+                $(".dayevents").remove();
+            });
+        });
+
+        $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
+            event.stopPropogation();
+        });
+
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
+            $(".dayevents").remove();
+            $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
+                event.stopPropogation();
+            });
+        });
+
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
+            event.stopPropogation();
         });
     });
     
@@ -139,10 +176,91 @@ function popit(date){
     });
 }
 
-function hoverbubble(tbody, thisday){
-    //Get a list of actions for that day
-    //Note: pass in the tbody above the trs containing the actions and the index of the day
-    var children = tbody.children(); //Each child is a tr.
-    var firsttr = children[0];
+function getdate(event){
+    var eventclick = $(event.target).closest("td");
+    var thisweek = eventclick.closest(".fc-week").index();
+    var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
     
+    var mytr = eventclick.closest("tr").index();
+    var alltrs = eventclick.closest("tbody");
+    var row = [0, 1, 2, 3, 4, 5, 6];
+
+    console.log(alltrs, mytr);
+
+    for(var i = 0; i < mytr; i++){
+        var thistr = $(alltrs).find("tr").eq(i);
+        for(var j = 0; j < thistr.children().length; j++){
+            var td = $(thistr).find("td").eq(j);
+            if(td.attr("rowspan") != undefined){
+                row.splice(row.indexOf(j),1);
+            }
+        }
+        console.log(row);
+    }
+
+    var thisday = row[eventclick.closest("td").index()];
+    console.log(thisday);
+
+    var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
+    return findday.attr("data-date");
+}
+
+function getevents(date){
+    //First, find the index of the day and week
+    var thisday = $(".fc-day[data-date = "+date+"]");
+    var dayindex = thisday.index();
+    var thisweek = thisday.closest(".fc-week");
+    var weekindex = thisweek.index();
+
+    //Then, get the tbody belonging to the week
+    var tbody = thisweek.find(".fc-content-skeleton table tbody");
+
+    //Similar to getdate above, we'll iterate through the trs, but will pick up events from the dayindex each step of the way
+    var row = [0, 1, 2, 3, 4, 5, 6];
+    var events = [];
+
+    var trcount = 0;
+    var end = false;
+    while(!end){
+        var tr = $(tbody).find("tr").eq(trcount);
+        if(!(0 in tr)){
+            end = true;
+            continue;
+        }
+        //If dayindex is still in row, we have an event to add; specifically, that element is at the td with indexOf(dayindex)
+        //If dayindex is not in row, we have extracted all events
+        if(row.indexOf(dayindex) != -1){
+            var td = $(tr).find("td").eq(row.indexOf(dayindex));
+            events.push($(td).find("a span").html());
+            trcount++;
+        }else{
+            end = true;
+            continue;
+        }
+
+        //Now filter by the same rowspan search used in getdate
+        for(var j = 0; j < tr.children().length; j++){
+            var td = $(tr).find("td").eq(j);
+            if(td.attr("rowspan") != undefined){
+                row.splice(row.indexOf(j),1);
+            }
+        }
+    }
+    return events;
+}
+
+function hoverbubble(date, events){
+    if(events[0] != undefined){
+        $("body").append("<div class = 'dayevents'></div>")
+        $(".dayevents").append("<h2 class = 'date'>"+date+"</h2>");
+        for(i in events){
+            $(".dayevents").append("<p class = 'dayevent'>"+events[i]+"</p>");
+        }
+        var height = 80+events.length*20;
+        var dayy = $(".fc-day[data-date="+date+"]").offset()["top"];
+        var dayx = $(".fc-day[data-date="+date+"]").offset()["left"];
+        $(".dayevents").css("top", dayy-((height-92)/2));
+        $(".dayevents").css("left", dayx+130);
+        $(".dayevents").css("height", height);
+    }
 }

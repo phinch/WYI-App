@@ -292,6 +292,10 @@ li{
     font-weight: 800;
 }
 
+.fc-event{
+    cursor: pointer;
+}
+
 .title{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -302,11 +306,11 @@ li{
 
 #blackscreen{
     display: none;
-    position: absolute;
+    position: fixed;
     opacity: 0.65;
     background: black;
-    height: 1250px;
-    width: 1250px;
+    height: 1000px;
+    width: 1000px;
     top: 0;
     left: 0;
 }
@@ -371,6 +375,26 @@ button {
 .close{
 	width: 50px;
 	height: 25px;
+}
+
+.dayevents{
+    position: absolute;
+    border-radius: 5%;
+    background: #eeeeee;
+    width: 150px;
+    text-align: center;
+}
+
+.date{
+    margin: 10px 0 10px 0;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+}
+
+.dayevent{
+    margin-bottom: 10px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
 }
 
 /********************************************/
