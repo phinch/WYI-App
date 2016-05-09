@@ -20,7 +20,7 @@ if (Meteor.isClient) {
 		        events: function(start, end, timezone, callback) {
 
                     var events = [];
-                    eventlist = Events.find({"text": name}).fetch();
+                    eventlist = Events.find({"text": name, "userID": Meteor.user().emails[0].address}).fetch();
                     for (i=0; i<eventlist.length; i++) {
                         events.push({
                             title: eventlist[i].text,
@@ -59,11 +59,12 @@ if (Meteor.isClient) {
                   "text": name,
                   "date": dateClicked,
                     "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
-                    "money": parseInt($("#moneysave").html().split('$')[1])
+                    "money": parseInt($("#moneysave").html().split('$')[1]),
+                    "userID": Meteor.user().emails[0].address
                 }
 
 
-		        var included = Events.findOne({"text": name, "date": dateClicked})
+		        var included = Events.findOne({"text": name, "date": dateClicked, "userID": Meteor.user().emails[0].address})
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
@@ -78,10 +79,11 @@ if (Meteor.isClient) {
 		          "text": name,
 		          "date": dateClicked,
                     "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
-                    "money": parseInt($("#moneysave").html().split('$')[1])
+                    "money": parseInt($("#moneysave").html().split('$')[1]),
+                    "userID": Meteor.user().emails[0].address
 		        }
 
-		        var included = Events.findOne({"text": name, "date": dateClicked})
+		        var included = Events.findOne({"text": name, "date": dateClicked, "userID": Meteor.user().emails[0].address})
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
@@ -96,11 +98,12 @@ if (Meteor.isClient) {
                   "text": name,
                   "date": dateClicked,
                     "carbon": parseInt($("#carbonsave").html().split(' ')[4]),
-                    "money": parseInt($("#moneysave").html().split('$')[1])
+                    "money": parseInt($("#moneysave").html().split('$')[1]),
+                    "userID": Meteor.user().emails[0].address
                 }
 
 
-		        var included = Events.findOne({"text": name, "date": dateClicked})
+		        var included = Events.findOne({"text": name, "date": dateClicked, "userID": Meteor.user().emails[0].address})
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );

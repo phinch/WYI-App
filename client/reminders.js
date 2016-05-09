@@ -11,7 +11,7 @@ if (Meteor.isClient) {
              events: function(start, end, timezone, callback) {
 
                 var events = [];
-                eventlist = Events.find({}).fetch();
+                eventlist = Events.find({"userID": Meteor.user().emails[0].address}).fetch();
                 for (i=0; i<eventlist.length; i++) {
                     events.push({
                         title: eventlist[i].text,
@@ -142,9 +142,10 @@ function popit(date){
             "text": $("#popup #actiontitle").html(),
             "date": date,
             "carbon": parseInt($("#popup #carbonsave").html().split(' ')[4]),
-            "money": parseInt($("#popup #moneysave").html().split('$')[1])
+            "money": parseInt($("#popup #moneysave").html().split('$')[1]),
+            "userID": Meteor.user().emails[0].address
         }
-        var included = Events.findOne({"text": $("#popup #actiontitle").html(), "date": date})
+        var included = Events.findOne({"text": $("#popup #actiontitle").html(), "date": date, "userID": Meteor.user().emails[0].address})
         if (included === undefined) {
             Meteor.call('addEvent', params, function(error, result) {
                 $('#events-calendar').fullCalendar( 'refetchEvents' );

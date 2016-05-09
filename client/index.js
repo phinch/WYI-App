@@ -89,7 +89,7 @@ Template.home.helpers({
     var carbonnumber = currentUser.carbon
     var moneynumber = currentUser.money
     var data = {
-      "saved": Events.find({"date": now}),
+      "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
     };
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
