@@ -16,7 +16,11 @@ Meteor.startup(() => {
       },
 
       fetchEvents: function() {
-      	return console.log(Events.find({}));
+      	return Events.find({});
+      },
+
+      fetchEventsDate: function(date) {
+      	return Events.find({"date": date})
       },
 
       deleteEvent: function(event) {

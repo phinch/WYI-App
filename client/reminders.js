@@ -119,7 +119,7 @@ function popit(date){
     });
 
     $("#popup").on("click", "#actions .listactions .description .submit", function(event){
-        params = {
+        params = { 
             "text": $("#popup #actiontitle").html(),
             "date": date
         }

@@ -190,7 +190,7 @@ Template.remind_actions.onCreated(function created() {
 });
 
 Template.remind_actions.helpers({
-  myactions: function() {
+  myactions2: function() {
     return Template.instance().actionitems2.get();
   }
 });
