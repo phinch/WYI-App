@@ -22,31 +22,25 @@
         {{> dropdown_example}}
       {{/each}}
 	</ul>
-
-	<!-- {{> Template.dynamic template="action_description" data=tabData}} -->
 </template>
-
-<!-- <template name="myaction">
-  <li><a href="#">{{category}}:{{text}}</a></li>
-</template> -->
 
 <template name="dropdown_example">
     {{#if active}}
-    <ul class="close">
-        <button>Close</button>
-      </ul>
-        <h2 id='name'>{{text}}</h2>
-          <p>Description of the activity goes here</p>
-<!--           {{> Template.dynamic template="action_calendar"}} -->
-      <div id='calendar'>
-<!--       {{> fullcalendar options}} -->
-      {{> actions_calendar }}
+    <div class = "description">
+            <h2 id='name'>{{text}}</h2>
+              <p>Description of the activity goes here</p>
+          <div id='calendar'>
+          {{> actions_calendar }}
+        </div>
+          <ul class="submit">
+            <button>Add this task to your list</button>
+          </ul>
+        <ul class="close">
+            <button>Close</button>
+          </ul>
     </div>
-      <ul class="submit">
-        <button>Add this task to your list</button>
-      </ul>
     {{else}}
-        <li><a href="#">{{category}}:{{text}}</a></li>
+        <li class = "action"><a href="#">{{text}}</a></li>
     {{/if}}
 </template>
 
@@ -54,7 +48,3 @@
     {{rendered}}
 </template>
 
-<!-- <template name="myaction">
-    <li><a href="#">{{category}}:{{text}}</a></li>
-    {{> Template.dynamic template=templateName data=templateData}}
-</template> -->

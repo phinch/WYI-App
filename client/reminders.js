@@ -59,6 +59,7 @@ if (Meteor.isClient) {
         $(".fc-prev-button").css("border-radius", "12px 0 0 12px");
         $(".fc-next-button").css("border-radius", "0 12px 12px 0");
 
+        //CLICK EVENTS
         $("#outer").on("click", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
             var date = $(event.target).attr("data-date");
             popit(date);
@@ -79,6 +80,17 @@ if (Meteor.isClient) {
                 var date = findday.attr("data-date");
                 popit(date);
             }
+        });
+
+        //HOVER EVENTS
+        $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
+            console.log("hovering...");
+            var eventclick = $(event.target);
+            var thisday = eventclick.index();
+            var thisweek = eventclick.closest(".fc-week").index();
+            var findweek = $(".fc-day-grid .fc-week").eq(thisweek);
+            var findtbody = $(findweek).find(".fc-content-skeleton table tbody");
+            hoverbubble(findtbody, thisday);
         });
     });
     
@@ -125,4 +137,12 @@ function popit(date){
             alert("This action is already present on the selected date.")
         }  
     });
+}
+
+function hoverbubble(tbody, thisday){
+    //Get a list of actions for that day
+    //Note: pass in the tbody above the trs containing the actions and the index of the day
+    var children = tbody.children(); //Each child is a tr.
+    var firsttr = children[0];
+    
 }

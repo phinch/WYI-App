@@ -3,17 +3,18 @@
       <h3 class = "hello">Hello</h3>
       <h3 class = "info">You have saved <strong class = "carbon">30t</strong> of CO2</h3>
       <h3 class = "info">You have saved <strong class = "money">$2,242</strong></h3>
-    </div>
 
-    <h3>Today's Tasks</h3>
-    <div id ="today-list">
-    {{#each this.items}}
-        <div class = "todo">
-          <li class="list-group-item"><strong>{{text}}</strong></li>
-          <button class = "complete">Wingardium Leviosa!</button>
-          <button class = "failed">Give Up...</button>
-        </div>
-    {{/each}}
-	</div>
+
+        <h3><strong>Today's Tasks</strong></h3>
+        <div id ="today-list">
+        {{#each this.items}}
+            <div class = "todo">
+              <li class="list-group-item">{{text}}</li>
+              <button class = "complete">Wingardium Leviosa!</button>
+              <button class = "failed">Give Up...</button>
+            </div>
+        {{/each}}
+	    </div>
+    </div>
 </template>
 
