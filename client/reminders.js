@@ -33,11 +33,6 @@ if (Meteor.isClient) {
             },
 
             eventClick: function(calEvent, jsEvent, view) {
-/*                Meteor.call('deleteEvent', calEvent, function(error, result){
-                    $('#events-calendar').fullCalendar( 'refetchEvents' );
-                    
-                    }   
-                });*/
                 clicks++;  //count clicks
                 if(clicks === 1) {
                     timer = setTimeout(function() {
@@ -191,6 +186,7 @@ function getdate(event){
 }
 
 function getevents(date){
+    $(".dayevents").remove();
     //First, find the index of the day and week
     var thisday = $(".fc-day[data-date = "+date+"]");
     var dayindex = thisday.index();

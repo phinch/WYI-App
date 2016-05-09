@@ -54,8 +54,6 @@ Template.index.helpers({
     var data = {
       "saved": Events.find({"date": now}),
     };
-    console.log(data[tab])
-    console.log(tab)
     return { contentType: tab, items: data[tab] }
   }
 });
@@ -93,8 +91,6 @@ Template.home.helpers({
     var data = {
       "saved": Events.find({"date": now}),
     };
-    console.log(data[tab])
-    console.log(tab)
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
 });
@@ -108,11 +104,7 @@ Template.home.events({
 
     template.currentTab.set( currentTab.data( "template" ) );
   },
-
-  /*'click': function() {
-        Session.set('dropdown', null);
-    }
-*/});
+});
 
 Template.index.events({
   'click .nav-pills li': function( event, template ) {
@@ -123,11 +115,7 @@ Template.index.events({
 
     template.currentTab.set( currentTab.data( "template" ) );
   },
-
-  /*'click': function() {
-        Session.set('dropdown', null);
-    }
-*/});
+});
 
 Template.dashboard.onCreated(function OnCreated() {
   this.currentTab2 = new ReactiveVar( "reminders" );
@@ -241,7 +229,6 @@ Template.remind_actions.events({
     $(':checkbox:checked').each(function(i){
       val[i] = $(this).val();
     })
-    console.log(val)
     template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
   }
 })
@@ -252,11 +239,6 @@ $(document).keyup(function(evt) {
         Meteor.call('closeAll');
     }
 });
-
-
-/*Template.dropdown_example.active = function () {
-  return this.status === "active";
-};*/
 
 Template.dropdown_example.helpers({
   active(){

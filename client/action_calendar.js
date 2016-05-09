@@ -2,17 +2,7 @@ import { Events } from '../imports/api/events.js'
 import { Activities } from '../imports/api/activities.js'
 
 if (Meteor.isClient) {
-    function makeDraggable() {
-        $('#calendar .fc-event').each(function() {
-            $(this).draggable({
-                zIndex: 999,
-                revert: true,      // will cause the event to go back to its
-                revertDuration: 0  //  original position after the drag
-            });
 
-        });
-    }
- 
 	Template.action_calendar.rendered = function(){
         setTimeout(function(){
 	        var clicks = 0;
@@ -24,19 +14,8 @@ if (Meteor.isClient) {
 
 
                 eventDrop: function( event, delta, revertFunc) {
-                
-/*                    $('#calendar').fullCalendar('removeEvents', event._id);
-                    var el = $( "<div class='fc-event'>" ).appendTo( '#external-events-listing' ).text( event.title );*/
-                    /*var el = $( "<div class='fc-event'>" )*/
-                    console.log("hi");
                     alert(event.title + " was dropped on " + event.start.format());
-                    /*el.draggable({
-                      zIndex: 999,
-                      revert: true, 
-                      revertDuration: 0 
-                    });
-                    el.data('event', { title: event.title, start: event.start, id :event.id, stick: true });
-*/          },
+                },
 
 		        events: function(start, end, timezone, callback) {
 
@@ -50,9 +29,7 @@ if (Meteor.isClient) {
                             id: eventlist[i]._id
                         });
                     }
-                    console.log("made it here", events, callback);
                     callback(events)
-                    console.log("made it Here");
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                 	clicks++;  //count clicks
@@ -90,7 +67,6 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
-                       makeDraggable();
 			        });
                 }
 	        });
@@ -109,27 +85,9 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
-                        makeDraggable();
 			        });
                 }
 	        });
-
-/*            $("#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day").each(function() {
-                $(this).droppable({
-                    drop: function( event, ui ) {
-                        alert(event)
-                    }   
-                });
-            });*/
-
-
-            $('#calendar .fc-event').each(function() {
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true,      // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
-                });
-            });
 
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
 		        var dateClicked = getdate(event);
@@ -146,7 +104,6 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
-                        makeDraggable();
 			        });
                 }
 	        });
