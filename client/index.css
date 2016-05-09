@@ -315,8 +315,6 @@ li{
     position: fixed;
     opacity: 0.65;
     background: black;
-    height: 1000px;
-    width: 1000px;
     top: 0;
     left: 0;
 }

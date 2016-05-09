@@ -4,6 +4,7 @@ import { Activities } from '../imports/api/activities.js'
 if (Meteor.isClient) {
 
     Template.reminders.onRendered( () => {
+        $("#outer").off();
         var clicks = 0;
         var timer;
         $( '#events-calendar' ).fullCalendar({
@@ -91,43 +92,28 @@ if (Meteor.isClient) {
             hoverbubble(date, events);
         });
 
-        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
-            $(".dayevents").remove();
-        });
-
         $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number", function(event){
             var date = $(event.target).attr("data-date");
             var events = getevents(date);
             hoverbubble(date, events);
         });
 
-        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number", function(event){
-            $(".dayevents").remove();
-        });
-
         $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
-            $("#outer").off("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a");
             var date = getdate(event);
             var events = getevents(date);
             hoverbubble(date, events);
-            $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
-                $(".dayevents").remove();
-            });
         });
 
-        $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
-            event.stopPropogation();
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
+            hoverbubble(null, [null]);
         });
 
         $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
-            $(".dayevents").remove();
-            $("#outer").on("mouseover", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
-                event.stopPropogation();
-            });
+            hoverbubble(null, [null]);
         });
 
-        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td a", function(event){
-            event.stopPropogation();
+        $("#outer").on("mouseleave", "#template #events-calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table thead tr .fc-day-number", function(event){
+            hoverbubble(null, [null]);
         });
     });
     
@@ -142,7 +128,8 @@ function popit(date){
     $(".popup").remove();
     $("#popup").off("click");
     //$(".fc-day").css("background", "white");
-
+    $("#blackscreen").height($(window).height());
+    $("#blackscreen").width($(window).width());
     $("#blackscreen").fadeIn();
     $("#popup").fadeIn();
 
@@ -185,8 +172,6 @@ function getdate(event){
     var alltrs = eventclick.closest("tbody");
     var row = [0, 1, 2, 3, 4, 5, 6];
 
-    console.log(alltrs, mytr);
-
     for(var i = 0; i < mytr; i++){
         var thistr = $(alltrs).find("tr").eq(i);
         for(var j = 0; j < thistr.children().length; j++){
@@ -195,11 +180,9 @@ function getdate(event){
                 row.splice(row.indexOf(j),1);
             }
         }
-        console.log(row);
     }
 
     var thisday = row[eventclick.closest("td").index()];
-    console.log(thisday);
 
     var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
     return findday.attr("data-date");
@@ -250,7 +233,7 @@ function getevents(date){
 }
 
 function hoverbubble(date, events){
-    if(events[0] != undefined){
+    if(events[0] != undefined && !(0 in $(".dayevents"))){
         $("body").append("<div class = 'dayevents'></div>")
         $(".dayevents").append("<h2 class = 'date'>"+date+"</h2>");
         for(i in events){
@@ -259,8 +242,24 @@ function hoverbubble(date, events){
         var height = 80+events.length*20;
         var dayy = $(".fc-day[data-date="+date+"]").offset()["top"];
         var dayx = $(".fc-day[data-date="+date+"]").offset()["left"];
+        var dayheight = $(".fc-day[data-date="+date+"]").height();
+        var daywidth = $(".fc-day[data-date="+date+"]").width();
+        $(".dayevents").attr("minheight", dayy);
+        $(".dayevents").attr("maxheight", dayy+dayheight);
+        $(".dayevents").attr("minwidth", dayx);
+        $(".dayevents").attr("maxwidth", dayx+daywidth);
         $(".dayevents").css("top", dayy-((height-92)/2));
-        $(".dayevents").css("left", dayx+130);
+        $(".dayevents").css("left", dayx+daywidth+10);
         $(".dayevents").css("height", height);
+    }else if(0 in $(".dayevents")){
+        var x = event.pageX;
+        var y = event.pageY;
+        var minheight = $(".dayevents").attr("minheight");
+        var maxheight = $(".dayevents").attr("maxheight");
+        var minwidth = $(".dayevents").attr("minwidth");
+        var maxwidth = $(".dayevents").attr("maxwidth");
+        if(x < minwidth || x > maxwidth || y < minheight || y > maxheight){
+            $(".dayevents").remove();
+        }
     }
 }
