@@ -341,6 +341,7 @@ li{
 
 .listactions{
     margin-top: 20px;
+    overflow-y: scroll;
 }
 
 .description{
