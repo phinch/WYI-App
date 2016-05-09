@@ -2,6 +2,16 @@ import { Events } from '../imports/api/events.js'
 import { Activities } from '../imports/api/activities.js'
 
 if (Meteor.isClient) {
+    function makeDraggable() {
+        $('#calendar .fc-event').each(function() {
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+    }
     console.log("actions calendar");
 	Template.action_calendar.rendered = function(){
         setTimeout(function(){
@@ -59,6 +69,7 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
+                        makeDraggable();
 			        });
                 }
 	        });
@@ -75,9 +86,18 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
+                        makeDraggable();
 			        });
                 }
 	        });
+
+            $('#calendar .fc-event').each(function() {
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true,      // will cause the event to go back to its
+                    revertDuration: 0  //  original position after the drag
+                });
+            });
 
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-content-skeleton table tbody tr td", function(event){
 		        var dateClicked = getdate(event);
@@ -91,6 +111,7 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
+                        makeDraggable();
 			        });
                 }
 	        });
