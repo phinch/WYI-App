@@ -37,6 +37,22 @@ Template.index.onCreated(function helloOnCreated() {
   this.currentTab = new ReactiveVar( "home" );
 });
 
+Template.index.helpers({
+  tab: function() {
+    return Template.instance().currentTab.get();
+  },
+  tabData: function() {
+    var tab = Template.instance().currentTab.get();
+    var now = GetTodayDate();
+    var data = {
+      "saved": Events.find({"date": now}),
+    };
+    console.log(data[tab])
+    console.log(tab)
+    return { contentType: tab, items: data[tab] }
+  }
+});
+
 function GetTodayDate() {
    var tdate = new Date();
    var dd = tdate.getDate(); //yields day
@@ -53,7 +69,11 @@ function GetTodayDate() {
    return xxx;
 }
 
-Template.index.helpers({
+Template.home.onCreated(function helloOnCreated() {
+  this.currentTab = new ReactiveVar( "saved" );
+});
+
+Template.home.helpers({
   tab: function() {
     return Template.instance().currentTab.get();
   },
@@ -61,13 +81,28 @@ Template.index.helpers({
     var tab = Template.instance().currentTab.get();
     var now = GetTodayDate();
     var data = {
-      "home": Events.find({"date": now}),
+      "saved": Events.find({"date": now}),
     };
     console.log(data[tab])
     console.log(tab)
     return { contentType: tab, items: data[tab] }
   }
 });
+
+Template.home.events({
+  'click .nav-pills2 li': function( event, template ) {
+    var currentTab = $( event.target ).closest( "li" );
+
+    currentTab.addClass( "active" );
+    $( ".nav-pills2 li" ).not( currentTab ).removeClass( "active" );
+
+    template.currentTab.set( currentTab.data( "template" ) );
+  },
+
+  /*'click': function() {
+        Session.set('dropdown', null);
+    }
+*/});
 
 Template.index.events({
   'click .nav-pills li': function( event, template ) {
@@ -85,7 +120,7 @@ Template.index.events({
 */});
 
 Template.dashboard.onCreated(function OnCreated() {
-  this.currentTab2 = new ReactiveVar( "activities" );
+  this.currentTab2 = new ReactiveVar( "reminders" );
 });
 
 Template.dashboard.helpers({
@@ -164,14 +199,6 @@ Template.list_actions.helpers({
     return Template.instance().actionitems.get();
   }
 });
-/*
-Template.list_actions.helpers({
-  myactions(){
-    return Actions.find({});
-  },
-});
-*/
-
 
 Template.list_actions.events({
   'click #filter': function(event, template) {

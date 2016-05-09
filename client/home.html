@@ -1,20 +1,16 @@
 <template name="home">
-    <div id = "home">
-      <h3 class = "hello">Hello</h3>
-      <h3 class = "info">You have saved <strong class = "carbon">30t</strong> of CO2</h3>
-      <h3 class = "info">You have saved <strong class = "money">$2,242</strong></h3>
-
-
-        <h3><strong>Today's Tasks</strong></h3>
-        <div id ="today-list">
-        {{#each this.items}}
-            <div class = "todo">
-              <li class="list-group-item">{{text}}</li>
-              <button class = "complete">Wingardium Leviosa!</button>
-              <button class = "failed">Give Up...</button>
-            </div>
-        {{/each}}
-	    </div>
+  <div id = "innerdash">
+      <ul class="nav nav-pills2" id = "innernav">
+        <!-- <li data-template="activities" role="presentation" class="active"><a href="#">Recent Activities</a></li> -->
+        <li data-template="saved" role="presentation"><a href="#">Dashboard</a></li>
+        <li data-template="Newsfeed" role="presentation"><a href="#">Recent Activities</a></li>
+        <!-- <li data-template="actions" role="presentation"><a href="#">My Actions</a></li> -->
+        
+      </ul>
+  </div>
+  <div id = "outer">
+      <div id = "template">
+        {{> Template.dynamic template=tab data=tabData}}
+        </div>
     </div>
 </template>
-
