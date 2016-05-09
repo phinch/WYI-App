@@ -21,7 +21,15 @@ if (Meteor.isClient) {
                 email: emailVar,
                 password: passwordVar
             });
-            Meteor.call("insertUser", params);
+            var included = UserInfo.findOne({"userID": emailVar})
+            console.log(emailVar)
+            console.log(included)
+            if (included === undefined) {
+                Meteor.call("insertUser", params);
+            }
+            else {
+              alert("Email Address already exists!")
+            }
         }
     });
 
@@ -30,7 +38,11 @@ if (Meteor.isClient) {
         event.preventDefault();
         var emailVar = event.target.loginEmail.value;
         var passwordVar = event.target.loginPassword.value;
-        Meteor.loginWithPassword(emailVar, passwordVar);
+        Meteor.loginWithPassword(emailVar, passwordVar, function(err) {
+          if(err) {
+            alert("Email/Password combination not correct!");
+          }
+        });
       }
     });
     Template.loggedin.events({
