@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 
         });
     }
-    console.log("actions calendar");
+ 
 	Template.action_calendar.rendered = function(){
         setTimeout(function(){
 	        var clicks = 0;
@@ -20,6 +20,24 @@ if (Meteor.isClient) {
 
 	        var name = $('#name').html()
 	        $('#calendar').fullCalendar({
+
+
+
+                eventDrop: function( event, delta, revertFunc) {
+                
+/*                    $('#calendar').fullCalendar('removeEvents', event._id);
+                    var el = $( "<div class='fc-event'>" ).appendTo( '#external-events-listing' ).text( event.title );*/
+                    /*var el = $( "<div class='fc-event'>" )*/
+                    console.log("hi");
+                    alert(event.title + " was dropped on " + event.start.format());
+                    /*el.draggable({
+                      zIndex: 999,
+                      revert: true, 
+                      revertDuration: 0 
+                    });
+                    el.data('event', { title: event.title, start: event.start, id :event.id, stick: true });
+*/          },
+
 		        events: function(start, end, timezone, callback) {
 
                     var events = [];
@@ -54,7 +72,7 @@ if (Meteor.isClient) {
                         clicks = 0;//after action performed, reset counter
                     }
                 },
-             
+                droppable: true,
 		        height: 400
             });
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
@@ -69,7 +87,7 @@ if (Meteor.isClient) {
             	if (included === undefined) {
               		Meteor.call('addEvent', params, function(error, result) {
 		            	$('#calendar').fullCalendar( 'refetchEvents' );
-                        makeDraggable();
+                       makeDraggable();
 			        });
                 }
 	        });
@@ -90,6 +108,15 @@ if (Meteor.isClient) {
 			        });
                 }
 	        });
+
+            $("#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day").each(function() {
+                $(this).droppable({
+                    drop: function( event, ui ) {
+                        alert(event)
+                    }   
+                });
+            });
+
 
             $('#calendar .fc-event').each(function() {
                 $(this).draggable({
@@ -129,8 +156,6 @@ function getdate(event){
     var alltrs = eventclick.closest("tbody");
     var row = [0, 1, 2, 3, 4, 5, 6];
 
-    console.log(alltrs, mytr);
-
     for(var i = 0; i < mytr; i++){
         var thistr = $(alltrs).find("tr").eq(i);
         for(var j = 0; j < thistr.children().length; j++){
@@ -139,11 +164,11 @@ function getdate(event){
                 row.splice(row.indexOf(j),1);
             }
         }
-        console.log(row);
+
     }
 
     var thisday = row[eventclick.closest("td").index()];
-    console.log(thisday);
+
 
     var findday = $(findweek).find(".fc-bg table tbody tr .fc-day").eq(thisday);
     return findday.attr("data-date");
