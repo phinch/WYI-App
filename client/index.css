@@ -69,6 +69,13 @@ input[type=submit]:hover {
     display: inline-block;
     margin-right: 2%;
 }
+
+.loggedout{
+    font-family: 'Raleway', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 50px;
+}
 /********************************************/
 /*MAIN BODY*/
 /********************************************/
@@ -336,11 +343,6 @@ li{
     margin-left: 20px;
 }
 
-.listactions{
-    margin-top: 20px;
-    overflow-y: scroll;
-}
-
 .description{
     margin-bottom: 20px;
 }
@@ -379,6 +381,10 @@ button {
 .close{
 	width: 50px;
 	height: 25px;
+}
+
+#popup .listactions .description .close{
+    margin-left: 0;
 }
 
 .dayevents{
@@ -439,3 +445,10 @@ a{
 a:hover{
     color: #222222;
 }
+
+.listactions{
+    margin-top: 20px;
+    height: 90%;
+    overflow-y: scroll;
+}
+

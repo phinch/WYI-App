@@ -22,8 +22,6 @@ if (Meteor.isClient) {
                 password: passwordVar
             });
             var included = UserInfo.findOne({"userID": emailVar})
-            console.log(emailVar)
-            console.log(included)
             if (included === undefined) {
                 Meteor.call("insertUser", params);
             }
@@ -226,28 +224,37 @@ Template.list_actions.events({
   }
 })
 
+var actionitems2;
+
 Template.remind_actions.onCreated(function created() {
-  this.actionitems2 = new ReactiveVar( Actions.find({}) );
+  actionitems2 = new ReactiveVar( Actions.find({}) );
+    console.log(actionitems2);
 });
 
 Template.remind_actions.helpers({
   myactions2: function() {
-    return Template.instance().actionitems2.get();
+    return actionitems2.get();
   }
 });
 
 /*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
+<<<<<<< HEAD
 Template.remind_actions.events({
   'click #actions #filter2': function(event, template) {
+=======
+Template.reminders.events({
+  'click #filter2': function(event, template) {
+    console.log("filter clicked");
+>>>>>>> origin/master
     event.preventDefault();
     alert("clicked")
     var val = []
     $(':checkbox:checked').each(function(i){
       val[i] = $(this).val();
     })
-    template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
-  }
+    actionitems2.set(Actions.find({"category": {"$in" : val}}))
+  },
 })
 /*$('#popup').ready(function() {
   $('#popup').on('click', '#popup #actions #filter2', function(event) {

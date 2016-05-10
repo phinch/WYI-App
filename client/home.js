@@ -7,10 +7,15 @@ if (Meteor.isClient) {
 
     Template.home.onRendered(function(){
         checkevents();
+        $("li[data-template='saved'] a").on("click", function(){
+            setTimeout(function(){
+                checkevents();
+            }, 40);
+        });
     });
     
     $("body").on("click", "div #template #today-list .todo .complete", function(event){
-        $(event.target).closest(".todo").slideUp(); //woosh
+        $(event.target).closest(".todo").slideUp(checkevents); //woosh
         var action = $(event.target).closest(".todo").find(".list-group-item").html();
         var date = GetTodayDate()
         var faded = 0;
@@ -33,7 +38,6 @@ if (Meteor.isClient) {
                 });
                 $(".info").fadeIn();
             }
-            checkevents();
         });
     });
 
