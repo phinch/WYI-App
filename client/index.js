@@ -99,6 +99,7 @@ Template.home.helpers({
     var carbonnumber = currentUser.carbon
     var moneynumber = currentUser.money
     var data = {
+      "newsfeed": Activities.find({"userID": Meteor.user().emails[0].address}),
       "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
     };
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
@@ -232,8 +233,6 @@ Template.remind_actions.helpers({
     return actionitems2.get();
   }
 });
-
-/*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
 Template.reminders.events({
   'click #filter2': function(event, template) {
