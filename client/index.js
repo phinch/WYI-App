@@ -99,14 +99,9 @@ Template.home.helpers({
     var carbonnumber = currentUser.carbon
     var moneynumber = currentUser.money
     var data = {
-<<<<<<< HEAD
       "newsfeed": Activities.find({"userID": Meteor.user().emails[0].address}),
       "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
-=======
-      "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
-
       "newsfeed": Activities.find({"userID" :Meteor.user().emails[0].address}, {limit: 20, sort: {timestamp: -1}}),
->>>>>>> origin/master
     };
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
@@ -231,7 +226,6 @@ var actionitems2;
 
 Template.remind_actions.onCreated(function created() {
   actionitems2 = new ReactiveVar( Actions.find({}) );
-    console.log(actionitems2);
 });
 
 Template.remind_actions.helpers({
@@ -240,27 +234,16 @@ Template.remind_actions.helpers({
   }
 });
 
-<<<<<<< HEAD
-=======
-/*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-
-
->>>>>>> origin/master
 Template.reminders.events({
   'click #filter2': function(event, template) {
-    console.log("filter clicked");
     event.preventDefault();
     var val = []
     $(':checkbox:checked').each(function(i){
       val[i] = $(this).val();
     })
     actionitems2.set(Actions.find({"category": {"$in" : val}}))
-  },
+  }
 })
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 
 $(document).keyup(function(evt) {
     if (evt.keyCode === 27) {
