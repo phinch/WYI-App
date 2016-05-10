@@ -34,7 +34,9 @@ if (Meteor.isClient) {
                 Meteor.call('updateMoney', currentUser.userID, moneynumber, function(error, result) {
                   Meteor.call('deleteTodayDate', action, date)
                   var completedEvent = "You completed the action - " + action;
-                  Activities.insert({"text": completedEvent, "date": date, "userID": Meteor.user().emails[0].address})
+                  var d = new Date();
+                  var seconds = d.getTime() / 1000;
+                  Activities.insert({"text": completedEvent, "date": date, "userID": Meteor.user().emails[0].address, "timestamp": seconds})
                 });
                 $(".info").fadeIn();
             }

@@ -103,7 +103,7 @@ Template.home.helpers({
     var data = {
       "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
 
-      "newsfeed": Activities.find({"userID": Meteor.user().emails[0].address}),
+      "newsfeed": Activities.find({"userID" :Meteor.user().emails[0].address}, {limit: 20, sort: {timestamp: -1}}),
     };
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
@@ -239,14 +239,10 @@ Template.remind_actions.helpers({
 
 /*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
-<<<<<<< HEAD
-Template.remind_actions.events({
-  'click #actions #filter2': function(event, template) {
-=======
+
 Template.reminders.events({
   'click #filter2': function(event, template) {
     console.log("filter clicked");
->>>>>>> origin/master
     event.preventDefault();
     alert("clicked")
     var val = []
@@ -256,18 +252,6 @@ Template.reminders.events({
     actionitems2.set(Actions.find({"category": {"$in" : val}}))
   },
 })
-/*$('#popup').ready(function() {
-  $('#popup').on('click', '#popup #actions #filter2', function(event) {
-      event.preventDefault();
-      alert("clicked")
-      var val = []
-      $(':checkbox:checked').each(function(i){
-        val[i] = $(this).val();
-      })
-      template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
-  });
-});
-*/
 
 $(document).keyup(function(evt) {
     if (evt.keyCode === 27) {
