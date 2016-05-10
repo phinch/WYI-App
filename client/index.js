@@ -7,6 +7,14 @@ import { UserInfo } from '../imports/api/userinfo.js'
 import './index.html';
 
 if (Meteor.isClient) {
+  $(document).ready( function() {
+    Actions.insert({"category": "Transportation", "text": "Ride a bike", "carbon": 3, "money": 2},
+      {"category": "Home", "text": "Turn off the lights", "carbon": 3, "money": 1},
+      {"category": "Transportation", "text": "Walk more", "carbon": 6, "money": 4},
+      {"category": "Home", "text": "Don't eat red meat", "carbon": 5, "money": 8},
+      {"category": "Recycling", "text": "Recycle pl. bottles", "carbon": 4, "money": 5})
+  })
+    
     Template.register.events({
         'submit form': function(event) {
             event.preventDefault();
