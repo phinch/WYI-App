@@ -1,5 +1,6 @@
 import { UserInfo} from '../imports/api/userinfo.js'
 import { Events } from '../imports/api/events.js'
+import { Activities } from '../imports/api/activities.js'
 
 if (Meteor.isClient) {
     $("body").off();
@@ -14,7 +15,6 @@ if (Meteor.isClient) {
     });
     
     $("body").on("click", "div #template #today-list .todo .complete", function(event){
-        $(event.target).closest(".todo").slideUp(checkevents); //woosh
         var action = $(event.target).closest(".todo").find(".list-group-item").html();
         var date = GetTodayDate()
         var faded = 0;
@@ -32,19 +32,26 @@ if (Meteor.isClient) {
                 Meteor.call('updateCarbon', currentUser.userID, carbonnumber)
                 Meteor.call('updateMoney', currentUser.userID, moneynumber, function(error, result) {
                   Meteor.call('deleteTodayDate', action, date)
+                  var completedEvent = "You completed the action - " + action;
+                  Activities.insert({"text": completedEvent, "date": date, "userID": Meteor.user().emails[0].address})
                 });
-                $(".info").fadeIn();
+                $(".info").fadeIn(function(){
+                    $(event.target).closest(".todo").slideUp(function(){
+                        checkevents();
+                    });
+                });
             }
         });
     });
 
     $("body").on("click", "div #template #today-list .todo .failed", function(event){
-        $(event.target).closest(".todo").fadeOut(function(){
-            checkevents();
-        });
         var action = $(event.target).closest(".todo").find(".list-group-item").html();
         var date = GetTodayDate()
-        Meteor.call('deleteTodayDate', action, date)
+        $(event.target).closest(".todo").fadeOut(function(){
+            Meteor.call('deleteTodayDate', action, date, function(){
+                checkevents();
+            });
+        });
     });
 
     function GetTodayDate() {
