@@ -8,15 +8,15 @@ import './index.html';
 
 if (Meteor.isClient) {
   $(document).ready( function() {
-    var included = Events.findOne({"text": "Ride a bike"})
-      if (included === undefined) {
-        Actions.insert({"category": "Transportation", "text": "Ride a bike", "carbon": 3, "money": 2},
-                        {"category": "Home", "text": "Turn off the lights", "carbon": 3, "money": 1},
-                        {"category": "Transportation", "text": "Walk more", "carbon": 6, "money": 4},
-                        {"category": "Home", "text": "Don't eat red meat", "carbon": 5, "money": 8},
-                          {"category": "Recycling", "text": "Recycle pl. bottles", "carbon": 4, "money": 5})
-      }
-    
+    Meteor.call('deleteAllActions', function(error, result) {
+     
+        Actions.insert({"category": "Transportation", "text": "Ride a bike", "carbon": 3, "money": 2})
+        Actions.insert({"category": "Home", "text": "Turn off the lights", "carbon": 3, "money": 1})
+        Actions.insert({"category": "Transportation", "text": "Walk more", "carbon": 6, "money": 4})
+        Actions.insert({"category": "Home", "text": "Don't eat red meat", "carbon": 5, "money": 8})
+        Actions.insert({"category": "Recycling", "text": "Recycle pl. bottles", "carbon": 4, "money": 5})
+      
+    })
   })
     
     Template.register.events({
