@@ -50,7 +50,7 @@ if (Meteor.isClient) {
                     }
                 },
                 droppable: true,
-		        height: 400
+		        height: 500
             });
 	        $('.description').on("click", "#calendar .fc-view-container .fc-view table .fc-body tr .fc-widget-content .fc-scroller .fc-day-grid .fc-week .fc-bg table tbody tr .fc-day", function(event){
 		        var dateClicked = $(event.target).attr("data-date");

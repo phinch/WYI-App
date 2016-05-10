@@ -118,18 +118,19 @@ if (Meteor.isClient) {
 }
 
 function popit(date){
+    $(".dayevents").remove();
     //Reset
     $("#blackscreen").off("click");
     $(".popup").remove();
     $("#popup").off("click");
-    //$(".fc-day").css("background", "white");
     $("#blackscreen").height($(window).height());
     $("#blackscreen").width($(window).width());
     $("#blackscreen").fadeIn();
     $("#popup").fadeIn();
 
-    //TODO: Convert to formatted date
-    $("#popup .title").html($("#popup .title").html() + date);
+    var convdate = convertdate(date);
+
+    $("#popup .title").html($("#popup .title").html() + convdate);
     $("#blackscreen").on("click", function(event){
         $("#popup").fadeOut(function(){
             $("#popup .title").html("Add a new action: ");
@@ -238,7 +239,7 @@ function hoverbubble(date, events){
         for(i in events){
             $(".dayevents").append("<p class = 'dayevent'>"+events[i]+"</p>");
         }
-        var height = 80+events.length*20;
+        var height = 80+events.length*35;
         var dayy = $(".fc-day[data-date="+date+"]").offset()["top"];
         var dayx = $(".fc-day[data-date="+date+"]").offset()["left"];
         var dayheight = $(".fc-day[data-date="+date+"]").height();
@@ -247,7 +248,7 @@ function hoverbubble(date, events){
         $(".dayevents").attr("maxheight", dayy+dayheight);
         $(".dayevents").attr("minwidth", dayx);
         $(".dayevents").attr("maxwidth", dayx+daywidth);
-        $(".dayevents").css("top", dayy-((height-92)/2));
+        $(".dayevents").css("top", dayy-((height-dayheight)/2)+20);
         $(".dayevents").css("left", dayx+daywidth+10);
         $(".dayevents").css("height", height);
     }else if(0 in $(".dayevents")){
@@ -261,4 +262,24 @@ function hoverbubble(date, events){
             $(".dayevents").remove();
         }
     }
+}
+
+function convertdate(date){
+    //Date comes in form yyyy-mm-dd
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var days = ["st", "nd", "rd", "th"];
+
+    var splitup = date.split("-");
+    var year = splitup[0];
+
+    var month = months[parseInt(splitup[1])-1];
+
+    var day = parseInt(splitup[2]);
+    var lastchar = parseInt(splitup[2].charAt(1));
+    if(lastchar > 4 || lastchar == 0 || day == 11 || day == 12 || day == 13){
+        lastchar = 4;
+    }
+    day += days[lastchar-1]
+
+    return month + " " + day + ", " + year;
 }
