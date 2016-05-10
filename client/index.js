@@ -172,16 +172,22 @@ Template.myprofile.helpers({
 
     var data = {
       "about": [
-        { "name": "Seeking Wisdom: From Darwin to Munger", "creator": "Peter Bevelin" }
+        { "label": "Name", "info": "Philip Hinch" },
+        { "label": "Age", "info": "20"},
+        { "label": "Occupation", "info": "Student"},
+        { "label": "Location", "info": "Providence, RI"}
       ],
       "travel": [
-        { "name": "Ghostbusters", "creator": "Dan Aykroyd" },
+        { "label": "Car", "info": "2012 Hyundai Sonata" },
+        { "label": "Bus System", "info": "Rhode Island Public Transporation Authority" }
       ],
       "home": [
-        { "name": "bleh", "creator": "bleh" },
+        { "label": "Home Type", "info": "Dormitory" },
+        { "label": "Home Size", "info": "110 sq ft." }
       ],
       "food": [
-        { "name": "Grand Theft Auto V", "creator": "Rockstar Games" },
+        { "label": "Dietary Restrictions", "info": "Vegetarian" },
+        { "label": "Weekly Budget", "info": "$70" }
       ]
     };
 
