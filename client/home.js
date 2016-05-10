@@ -1,5 +1,6 @@
 import { UserInfo} from '../imports/api/userinfo.js'
 import { Events } from '../imports/api/events.js'
+import { Activities } from '../imports/api/activities.js'
 
 if (Meteor.isClient) {
     $("body").off();
@@ -27,6 +28,8 @@ if (Meteor.isClient) {
                 Meteor.call('updateCarbon', currentUser.userID, carbonnumber)
                 Meteor.call('updateMoney', currentUser.userID, moneynumber, function(error, result) {
                   Meteor.call('deleteTodayDate', action, date)
+                  var completedEvent = "You completed the action - " + action;
+                  Activities.insert({"text": completedEvent, "date": date, "userID": Meteor.user().emails[0].address})
                 });
                 $(".info").fadeIn();
             }

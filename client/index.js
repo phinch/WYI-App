@@ -65,6 +65,8 @@ Template.index.helpers({
     var now = GetTodayDate();
     var data = {
       "saved": Events.find({"date": now}),
+
+      "newsfeed": Activities.find({}),
     };
     return { contentType: tab, items: data[tab] }
   }
@@ -102,6 +104,8 @@ Template.home.helpers({
     var moneynumber = currentUser.money
     var data = {
       "saved": Events.find({"date": now, "userID": Meteor.user().emails[0].address}),
+
+      "newsfeed": Activities.find({"userID": Meteor.user().emails[0].address}),
     };
     return { contentType: tab, Carbon: carbonnumber, Money: moneynumber, items: data[tab] }
   }
@@ -235,8 +239,9 @@ Template.remind_actions.helpers({
 /*TODO: FIX THE FILTER BUTTON!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
 Template.remind_actions.events({
-  'click #filter2': function(event, template) {
+  'click #actions #filter2': function(event, template) {
     event.preventDefault();
+    alert("clicked")
     var val = []
     $(':checkbox:checked').each(function(i){
       val[i] = $(this).val();
@@ -244,7 +249,18 @@ Template.remind_actions.events({
     template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
   }
 })
-
+/*$('#popup').ready(function() {
+  $('#popup').on('click', '#popup #actions #filter2', function(event) {
+      event.preventDefault();
+      alert("clicked")
+      var val = []
+      $(':checkbox:checked').each(function(i){
+        val[i] = $(this).val();
+      })
+      template.actionitems2.set(Actions.find({"category": {"$in" : val}}))
+  });
+});
+*/
 
 $(document).keyup(function(evt) {
     if (evt.keyCode === 27) {
@@ -275,10 +291,6 @@ Template.dropdown_example.events({
     'click .submit': function(event) {
         event.preventDefault();
         var selected_activity = Actions.findOne({"_id": this._id})
-        var included = Activities.findOne({"_id": selected_activity._id})
-        if (included === undefined) {
-          Activities.insert(selected_activity)
-        }
     }
 
 });
@@ -306,10 +318,6 @@ Template.reminder_example.events({
     'click .submit': function(event) {
         event.preventDefault();
         var selected_activity = Actions.findOne({"_id": this._id})
-        var included = Activities.findOne({"_id": selected_activity._id})
-        if (included === undefined) {
-          Activities.insert(selected_activity)
-        }
     }
 
 });
