@@ -126,6 +126,7 @@ function popit(date){
     $("#blackscreen").height($(window).height());
     $("#blackscreen").width($(window).width());
     $("#blackscreen").fadeIn();
+    $("#popup").css("left", ($(window).width()-$("#popup").width())/2);
     $("#popup").fadeIn();
 
     var convdate = convertdate(date);
